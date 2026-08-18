@@ -132,6 +132,9 @@ plugins:
     enabled: true
   - source: "@quartz-community/explorer"
     enabled: true
+    options:
+      # 왼쪽 메뉴에서 개인/관리 파일 숨기기 (projects와 홈만 표시)
+      filterFn: "(node) => !['SCHEMA','log','llm','raw','GUIDE','queries','comparisons','concepts'].includes(node.slugSegment)"
     layout:
       position: left
       priority: 50

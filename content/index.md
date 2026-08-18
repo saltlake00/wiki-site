@@ -169,6 +169,9 @@
   function initCards() {
     var cards = document.querySelectorAll('.card');
     cards.forEach(function (card) {
+      // 이미 빌드됐는지 확인 (재실행 시 중복 방지)
+      if (card.dataset.built) return;
+      card.dataset.built = '1';
       buildCard(card);
       var href = card.getAttribute('data-href');
 
@@ -231,5 +234,20 @@
   } else {
     initCards();
   }
+  // Quartz SPA 페이지 전환 시 홈으로 돌아오면 카드 다시 초기화
+  // (다른 페이지 갔다가 홈 복귀 시 카드 내용이 비어 보이던 버그 해결)
+  document.addEventListener('nav', function () {
+    var home = document.querySelector('.card');
+    if (home) {
+      // DOM이 교체된 경우 새 카드 요소들 다시 빌드
+      document.querySelectorAll('.card').forEach(function (c) {
+        delete c.dataset.built;
+      });
+      initCards();
+      // 선택 상태 초기화
+      var sel = document.querySelector('.card.selected');
+      if (sel) sel.classList.remove('selected');
+    }
+  });
 })();
 </script>

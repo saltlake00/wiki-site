@@ -34,7 +34,7 @@
   transform: rotateY(var(--fan));
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s, filter 0.3s;
   border-radius: 16px;
-  overflow: hidden;
+  /* overflow: hidden 제거 — 툴팁이 카드 바깥에 표시되도록 */
   z-index: 1;
   margin: 0 -14px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.45);
@@ -66,6 +66,8 @@
 .card-bg {
   position: absolute;
   inset: 0;
+  border-radius: 16px;
+  overflow: hidden;
   background-size: cover;
   background-position: center;
   filter: blur(6px) brightness(0.5);
@@ -74,11 +76,13 @@
 .card-overlay {
   position: absolute;
   inset: 0;
+  border-radius: 16px;
   background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%);
 }
 .card-content {
   position: absolute;
   inset: 0;
+  border-radius: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -103,13 +107,13 @@
   backdrop-filter: blur(4px);
 }
 
-/* 툴팁 */
+/* 툴팁: 카드 외부(아래)에 표시, 잘리지 않게 */
 .card-tooltip {
   position: absolute;
   left: 50%;
-  bottom: -36px;
+  bottom: -40px;
   transform: translateX(-50%);
-  background: rgba(0,0,0,0.9);
+  background: rgba(0,0,0,0.92);
   color: #eee;
   font-size: 0.7rem;
   padding: 6px 12px;
@@ -120,7 +124,7 @@
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s;
-  z-index: 200;
+  z-index: 500;
   border: 1px solid rgba(255,255,255,0.2);
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }

@@ -5,25 +5,28 @@
 
 <div class="deck">
 
-<div class="card" data-href="projects/unity/링스택/" data-img="assets/cards/ring-stack.svg" data-icon="⚙️" data-title="링 스택" data-sub="Ring Stack" data-badge="Unity · 게임" data-desc="스택 장르의 타이밍 탭 + 정렬 판정을 회전으로 재구성한 Unity 게임."></div>
 <div class="card" data-href="projects/" data-img="assets/cards/all-projects.svg" data-icon="📁" data-title="모든 프로젝트" data-sub="All Projects" data-badge="전체 보기" data-desc="프로젝트 도메인 전체 목록과 하위 구조 탐색."></div>
+
+<div class="card" data-href="projects/unity/링스택/" data-img="assets/cards/ring-stack.svg" data-icon="⚙️" data-title="링 스택" data-sub="Ring Stack" data-badge="Unity · 게임" data-desc="스택 장르의 타이밍 탭 + 정렬 판정을 회전으로 재구성한 Unity 게임. 720슬롯 AND 판정, 절차적 메시, NPR 셰이더."></div>
+
 <div class="card" data-href="llm/사용로그" data-img="assets/cards/llm-usage.svg" data-icon="📝" data-title="LLM 사용로그" data-sub="Usage Log" data-badge="사용 기록" data-desc="날짜별 LLM 사용 기록. 무엇을 했고 뭘 배웠는지 append-only로 쌓음."></div>
+
 <div class="card" data-href="llm/프롬프트-패턴" data-img="assets/cards/prompt-patterns.svg" data-icon="💡" data-title="프롬프트 패턴" data-sub="Prompt Patterns" data-badge="기법" data-desc="LLM 사용 중 발견한 유용한 프롬프트/기법 모음."></div>
 
 </div>
 
 <style>
+
 .deck {
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 400px;
+  min-height: 420px;
   margin: 2rem 0 3rem;
   perspective: 1600px;
   padding: 2rem 0;
 }
-/* 카드: 전체가 3D로 기울어짐 (내부가 아니라 카드 자체) */
 .card {
   --fan: 0deg;
   position: relative;
@@ -34,27 +37,27 @@
   transform: rotateY(var(--fan));
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s, filter 0.3s;
   border-radius: 16px;
-  /* overflow: hidden 제거 — 툴팁이 카드 바깥에 표시되도록 */
   z-index: 1;
   margin: 0 -14px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.45);
   background: #14141c;
-  /* 카드 모서리 얇은 외곽선 */
   border: 1px solid rgba(255,255,255,0.18);
 }
-/* 반원 배치: 카드 전체가 중심축 기준으로 휘어짐 */
-.card:nth-child(1) { --fan: 30deg; }
-.card:nth-child(2) { --fan: 10deg; }
-.card:nth-child(3) { --fan: -10deg; }
-.card:nth-child(4) { --fan: -30deg; }
-
-/* 호버: 카드 전체가 앞으로 나오며 살짝 올라옴 */
+.card:nth-child(1) { --fan: 32deg; }
+.card:nth-child(2) { --fan: 11deg; }
+.card:nth-child(3) { --fan: -11deg; }
+.card:nth-child(4) { --fan: -32deg; }
+.card:nth-child(5) { --fan: 45deg; }
+.card:nth-child(6) { --fan: 26deg; }
+.card:nth-child(7) { --fan: 8deg; }
+.card:nth-child(8) { --fan: -8deg; }
+.card:nth-child(9) { --fan: -26deg; }
+.card:nth-child(10) { --fan: -45deg; }
 .card:hover {
   transform: rotateY(var(--fan)) translateZ(50px) translateY(-10px) scale(1.05);
   box-shadow: 0 20px 40px rgba(0,0,0,0.6);
   z-index: 60;
 }
-/* 선택(확대): 카드 전체가 중앙으로, 정면 */
 .card.selected {
   transform: rotateY(0deg) translateZ(90px) scale(1.4);
   z-index: 100;
@@ -63,13 +66,10 @@
 .card.selected:hover {
   transform: rotateY(0deg) translateZ(90px) scale(1.4);
 }
-/* 활성화된 카드 하나만 강조: 나머지는 흐리게 */
 .deck:has(.card.selected) .card:not(.selected) {
   opacity: 0.4;
   filter: grayscale(0.4) brightness(0.6);
 }
-
-/* 카드 내용: 백그라운드 이미지 + 블러 + 반투명 레이어 + 텍스트 */
 .card-bg {
   position: absolute;
   inset: 0;
@@ -78,7 +78,6 @@
   background-size: cover;
   background-position: center;
   filter: blur(6px) brightness(0.5);
-  /* scale(1.1) 제거 — 블러가 카드 밖으로 튀어나오지 않게 */
 }
 .card-overlay {
   position: absolute;
@@ -113,8 +112,6 @@
   white-space: nowrap;
   backdrop-filter: blur(4px);
 }
-
-/* 툴팁: 카드 외부(아래)에 표시, 잘리지 않게 */
 .card-tooltip {
   position: absolute;
   left: 50%;
@@ -139,9 +136,11 @@
 .card.selected .card-tooltip {
   opacity: 1;
 }
+
 </style>
 
 <script>
+
 (function () {
   var selected = null;
   var maxTilt = 16;
@@ -154,8 +153,9 @@
     var desc = card.getAttribute('data-desc');
     var img = card.getAttribute('data-img');
 
+    var bg = img ? '<div class="card-bg" style="background-image:url(' + img + ')"></div>' : '';
     card.innerHTML =
-      '<div class="card-bg" style="background-image:url(' + img + ')"></div>' +
+      bg +
       '<div class="card-overlay"></div>' +
       '<div class="card-content">' +
         (icon ? '<div class="card-icon">' + icon + '</div>' : '') +
@@ -169,25 +169,20 @@
   function initCards() {
     var cards = document.querySelectorAll('.card');
     cards.forEach(function (card) {
-      // 이미 빌드됐는지 확인 (재실행 시 중복 방지)
       if (card.dataset.built) return;
       card.dataset.built = '1';
       buildCard(card);
       var href = card.getAttribute('data-href');
 
-      // 마우스 이동: 카드 전체가 기울어짐 (내부가 아니라)
       card.addEventListener('mousemove', function (e) {
         var rect = card.getBoundingClientRect();
-        var px = (e.clientX - rect.left) / rect.width;   // 0~1
-        var py = (e.clientY - rect.top) / rect.height;   // 0~1
+        var px = (e.clientX - rect.left) / rect.width;
+        var py = (e.clientY - rect.top) / rect.height;
         var rotY = (px - 0.5) * 2 * maxTilt;
         var rotX = (0.5 - py) * 2 * maxTilt;
-
         if (card.classList.contains('selected')) {
-          // 선택 상태: 카드 전체가 마우스 따라 기울어짐
           card.style.transform = 'rotateY(0deg) translateZ(90px) scale(1.4) rotateX(' + rotX.toFixed(1) + 'deg) rotateY(' + rotY.toFixed(1) + 'deg)';
         } else {
-          // 호버 상태: 카드 전체가 살짝 기울어짐
           card.style.transform = 'rotateY(var(--fan)) translateZ(50px) translateY(-10px) scale(1.05) rotateX(' + (rotX*0.5).toFixed(1) + 'deg) rotateY(' + (rotY*0.5).toFixed(1) + 'deg)';
         }
       });
@@ -199,28 +194,22 @@
         }
       });
 
-      // 클릭: 안 된 카드 클릭 = 선택(하나만 활성), 이미 선택된 카드 클릭 = 이동
       card.addEventListener('click', function (e) {
         e.stopPropagation();
-
-        // 이미 선택된 카드를 다시 클릭 → 페이지 이동
         if (card.classList.contains('selected')) {
           window.location.href = href;
           return;
         }
-
-        // 모든 카드의 선택 해제 + 인라인 transform 리셋
         var allCards = document.querySelectorAll('.card');
         allCards.forEach(function (c) {
           c.classList.remove('selected');
-          c.style.transform = '';   // 이전에 남은 인라인 3D transform 제거
+          c.style.transform = '';
         });
         card.classList.add('selected');
         selected = card;
       });
     });
 
-    // 빈 곳 클릭 시 선택 해제
     document.addEventListener('click', function (e) {
       if (!e.target.closest('.card') && selected) {
         selected.classList.remove('selected');
@@ -234,20 +223,14 @@
   } else {
     initCards();
   }
-  // Quartz SPA 페이지 전환 시 홈으로 돌아오면 카드 다시 초기화
-  // (다른 페이지 갔다가 홈 복귀 시 카드 내용이 비어 보이던 버그 해결)
   document.addEventListener('nav', function () {
-    var home = document.querySelector('.card');
-    if (home) {
-      // DOM이 교체된 경우 새 카드 요소들 다시 빌드
-      document.querySelectorAll('.card').forEach(function (c) {
-        delete c.dataset.built;
-      });
+    if (document.querySelector('.card')) {
+      document.querySelectorAll('.card').forEach(function (c) { delete c.dataset.built; });
       initCards();
-      // 선택 상태 초기화
       var sel = document.querySelector('.card.selected');
       if (sel) sel.classList.remove('selected');
     }
   });
 })();
+
 </script>

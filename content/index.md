@@ -39,6 +39,8 @@
   margin: 0 -14px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.45);
   background: #14141c;
+  /* 카드 모서리 얇은 외곽선 */
+  border: 1px solid rgba(255,255,255,0.18);
 }
 /* 반원 배치: 카드 전체가 중심축 기준으로 휘어짐 */
 .card:nth-child(1) { --fan: 30deg; }
@@ -71,7 +73,7 @@
   background-size: cover;
   background-position: center;
   filter: blur(6px) brightness(0.5);
-  transform: scale(1.1);
+  /* scale(1.1) 제거 — 블러가 카드 밖으로 튀어나오지 않게 */
 }
 .card-overlay {
   position: absolute;

@@ -10,6 +10,7 @@ type: project
 tags: [개발, 게임, Unity]
 created: 2026-08-18
 updated: 2026-08-18
+status: active
 ---
 
 # 링 스택 (Ring Stack)

@@ -2,6 +2,7 @@
 title: 링스택 vs 원본스택
 created: 2026-08-18
 updated: 2026-08-18
+status: active
 type: comparison
 tags: [개발, 게임, 비교]
 sources: [raw/projects/unity/링스택/링스택-게임-README.md]

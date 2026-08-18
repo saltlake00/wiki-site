@@ -3,6 +3,7 @@ title: Unity 프로젝트
 type: index
 created: 2026-08-18
 updated: 2026-08-18
+status: active
 ---
 
 # Unity

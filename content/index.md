@@ -194,12 +194,20 @@
         }
       });
 
+      var lastSelectTime = 0;   // 확대된 시각 (더블클릭/연타 방지용 쿨다운)
       card.addEventListener('click', function (e) {
         e.stopPropagation();
+        var now = Date.now();
+
+        // 이미 선택(확대)된 상태
         if (card.classList.contains('selected')) {
+          // 확대된 직후(쿨다운 600ms 이내) 클릭은 무시 — 확대 화면을 볼 시간 확보
+          if (now - lastSelectTime < 600) return;
           window.location.href = href;
           return;
         }
+
+        // 모든 카드 선택 해제 후, 이 카드만 활성화
         var allCards = document.querySelectorAll('.card');
         allCards.forEach(function (c) {
           c.classList.remove('selected');
@@ -207,6 +215,7 @@
         });
         card.classList.add('selected');
         selected = card;
+        lastSelectTime = Date.now();
       });
     });
 

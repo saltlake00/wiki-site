@@ -33,7 +33,20 @@ Unity 2D 플랫포머 게임용 도트 감성 캐릭터 스프라이트를 GPT �
 
 ---
 
-## 📋 전체 워크플로우
+## 🎮 워크플로우 선택
+
+### 옵션 A: AI 이미지 → 픽셀아트 (추천 ⭐)
+GPT/Stable Diffusion으로 고해상도 생성 → 픽셀 변환
+
+### 옵션 B: 3D 모델 → 픽셀아트 (던파 방식)
+Blender 3D 렌더 → 픽셀 변환 (일관성 최고)
+
+### 옵션 C: 수작업 도트 (전통 방식)
+Aseprite에서 처음부터 픽셀 단위로 직접 제작
+
+---
+
+## 📋 워크플로우 A: AI 이미지 → 픽셀아트
 
 ### Step 1: 고해상도 컨셉 생성 (GPT-4 Image Generation)
 
@@ -236,15 +249,199 @@ Negative: blurry, smooth shading, 3D render,
 
 ---
 
-## 🛠️ 도구 비교표
+## 📋 워크플로우 B: 3D 모델 → 픽셀아트 (던파 방식)
+
+**던전앤파이터 실제 워크플로우 분석**
+
+> 던파는 완전 자동 3D→도트 변환을 사용하지 않습니다. 3D 뼈대를 **참고 가이드로만** 사용하고, 디자이너가 한 프레임씩 수작업으로 도트를 직접 찍습니다.
+
+### 방법 1: Blender 자동 렌더 (프로토타입용)
+
+**장점**: 빠르고, 회전/애니메이션 자동 생성, 일관성 최고  
+**단점**: AI 느낌 적음, 수작업 디테일 부족
+
+#### Blender 설정
+
+```
+1. Render Engine: Eevee (빠른 렌더)
+   - Samples: 1 (안티앨리어싱 제거)
+   - Pixel Filter Size: 0.0 (픽셀 경계 선명)
+
+2. Camera: Orthographic 모드
+   - Perspective 왜곡 제거 (탑다운/사이드뷰 필수)
+   - Orthographic Scale: 모델 크기에 맞춤
+
+3. Film: Transparent 체크 (투명 배경)
+
+4. Output Resolution: 매우 낮게 설정
+   - 32x32, 64x64, 128x128 등
+   - 이후 업스케일하지 말 것!
+
+5. Shading: Toon Shader
+   - Diffuse BSDF → Shader to RGB → Color Ramp (Constant)
+   - Color Ramp Stops: 3-4개 (그라디언트 제거)
+   - Freestyle 또는 Inverted Hull로 외곽선 추가
+
+6. Texture Filtering: Closest/Nearest
+```
+
+#### 렌더 & 내보내기
+
+```bash
+# 애니메이션 렌더 (PNG 시퀀스)
+1. Output Format: PNG (RGBA)
+2. Frame Rate: 8-12 FPS (도트 감성)
+3. Render > Animation
+
+# FFmpeg로 스프라이트시트 생성
+ffmpeg -i render_%04d.png -filter_complex tile=8x1 spritesheet.png
+```
+
+#### Blender 애드온
+
+- **Sprytile**: 3D 공간에서 직접 픽셀 타일 편집
+- **PixelOver**: 3D 렌더를 픽셀아트로 자동 변환
+- **Mixamo**: 무료 리깅 애니메이션 (걷기, 달리기 등)
+
+### 방법 2: 3D 가이드 + 수작업 (던파 방식 ⭐)
+
+**장점**: 최고 품질, 도트 감성 살림, 디테일 제어  
+**단점**: 시간 소요 큼
+
+```
+1. Blender에서 3D 뼈대 애니메이션 제작
+   ↓
+2. Orthographic 뷰로 저해상도 렌더 (참고용)
+   ↓
+3. Aseprite에 렌더 이미지 Import
+   ↓
+4. 렌더 이미지를 Tracing Layer로 설정
+   ↓
+5. 새 레이어에서 도트를 직접 찍음
+   - 렌더는 가이드일 뿐, 직접 픽셀 배치
+   - 도트 감성을 살리기 위해 의도적으로 생략/과장
+   ↓
+6. 모든 프레임 반복
+```
+
+#### 던파 그래픽팀 인터뷰 핵심
+
+```
+- 포토샵 + 자체 프로모션 툴 사용
+- 각성기 등 복잡한 연출도 수작업
+- 3D는 뼈대/가이드로만 활용
+- 일러스트 느낌을 살리기 위해 전용 도트 프레임 별도 제작
+```
+
+---
+
+## 📋 워크플로우 C: 로컬 오픈소스 픽셀 변환기
+
+### 무료 오픈소스 도구 모음
+
+#### 1. **Image-to-Pixel** (JavaScript/Web) ⭐⭐⭐
+- **저장소**: https://github.com/Tezumie/Image-to-Pixel
+- **라이브**: https://tezumie.github.io/Image-to-Pixel/
+- **특징**:
+  - 초고속 실시간 변환
+  - 디더링: Floyd-Steinberg, Bayer 2x2/4x4, Ordered, Atkinson
+  - Lospec 팔레트 API 연동
+  - 커스텀 팔레트 저장/불러오기
+  - JavaScript API 제공 (p5.js/q5.js 통합 가능)
+  - **완전 무료, MIT 라이선스**
+
+**사용법**:
+```html
+<script src="https://cdn.jsdelivr.net/gh/Tezumie/Image-to-Pixel@main/image-to-pixel.js"></script>
+<script>
+ditheredCanvas = await pixelate({
+  image: myCanvas,
+  width: 64,
+  dither: 'Floyd-Steinberg',
+  strength: 20,
+  palette: ['#1b1b1e', '#f4f1de', '#e07a5f', '#3d405b'],
+  resolution: 'pixel'
+});
+</script>
+```
+
+#### 2. **Pixel-Perfect-AI-Art-Converter** (Web) ⭐⭐⭐
+- **저장소**: https://github.com/Void8Bit/Pixel-Perfect-AI-Art-Converter
+- **특징**:
+  - 그리드 기반 정밀 변환
+  - 이미지 위치/줌 수동 조정
+  - 4가지 변환 알고리즘:
+    - Most Used Color (가장 많은 색)
+    - Prioritize Light/Dark (명도 가중치)
+    - Average Color (평균 색상)
+    - Neighbor Color (이웃 영역 블렌딩)
+  - 내장 픽셀 편집기 (Brush, Eraser, Magic Wand)
+  - Ctrl+Z/Y 지원
+  - **완전 무료, Apache-2.0**
+
+**설치**:
+```bash
+# 다운로드 후 압축 해제
+# index.html 더블클릭으로 브라우저에서 실행
+```
+
+#### 3. **wdot** (Web) - WPlace 전용
+- **저장소**: https://github.com/noipung/wdot
+- **라이브**: https://noipung.github.io/wdot/
+- **특징**:
+  - WPlace 팔레트 자동 매칭
+  - 밝기/대비/채도 조정
+  - 디더링 지원
+  - 실시간 프리뷰
+  - 한국어 UI
+
+#### 4. **SpriteFusion Pixel Snapper** (Web/Desktop)
+- **웹**: https://www.spritefusion.com/pixel-snapper
+- **데스크톱**: $7.99 (한정 할인 중)
+- **특징**:
+  - AI 픽셀아트 정리 (mixel 제거)
+  - 커스텀 팔레트 지원 (NES, SNES, Game Boy 등)
+  - 디테일 보존 (디더링, 외곽선)
+  - 웹 버전 무료, 데스크톱 버전 배치 처리
+
+#### 5. **PixelAfterAll** ($18 일회성) ⭐⭐⭐⭐⭐
+- **구매**: https://masuone.itch.io/pixel-after-all
+- **제작자**: @masuone_ (트위터)
+- **특징**:
+  - **노드 기반 필터 시스템** (ComfyUI 스타일)
+  - 비디오 입력 → GIF/스프라이트시트
+  - 프레임 선택 애니메이션
+  - 배치 변환 (폴더 일괄 처리)
+  - 커스텀 필터 저장/로드 (JSON)
+  - 디더링 지원
+  - 라이트/다크 테마
+  - **Windows/macOS/Linux**
+
+**masuone 작가 워크플로우** (디시인사이드 게시글 기반):
+```
+1. ILXL 체크포인트 + 픽셀 LoRA로 AI 이미지 생성
+2. ComfyUI에서 8배 다운스케일 (768x1344 → 96x168)
+3. PixelAfterAll로 색상 제한 + 디더링
+4. Aseprite에서 수동 리터칭
+5. 캐릭터 LoRA 학습 (일관성 유지)
+```
+
+---
+
+## 🛠️ 도구 비교표 (업데이트)
 
 | 도구 | 용도 | 가격 | 장점 | 단점 |
 |------|------|------|------|------|
 | **True Pixel** | 자동 변환 | $49 일회성 | 비디오→시트 자동화, 팔레트 고정, 안정화 | 유료 |
+| **PixelAfterAll** ⭐ | 노드 기반 변환 | $18 일회성 | ComfyUI 스타일, 배치 처리, 비디오 지원 | 유료 (저렴) |
+| **Image-to-Pixel** ⭐ | 웹 변환 | 무료 | 실시간, 디더링, API 제공, MIT | 웹 기반만 |
+| **Pixel-Perfect** ⭐ | 그리드 변환 | 무료 | 정밀 제어, 내장 편집기, Ctrl+Z | 웹 기반만 |
 | **Aseprite** | 수동 편집 | $19.99 | 정밀 제어, 애니메이션 도구 | 수동 작업 필요 |
-| **ComfyUI** | 로컬 파이프라인 | 무료 | 오픈소스, 커스터마이징 | 설정 복잡 |
+| **Blender** | 3D→픽셀 | 무료 | 일관성, 회전뷰, 무료 리깅 | 설정 복잡 |
+| **ComfyUI** | AI 파이프라인 | 무료 | 오픈소스, LoRA 학습 | GPU 필요, 진입장벽 |
 | **PixelLab** | AI 생성 | $12/월~ | 텍스트→애니메이션, 회전뷰 | 구독제 |
-| **Piskel** | 온라인 편집 | 무료 | 웹 기반, 접근성 | 기능 제한 |
+| **Pixel Snapper** | AI 정리 | 무료/7.99 | mixel 제거, 팔레트 매칭 | 웹 버전 제한 |
+| **wdot** | WPlace 변환 | 무료 | 한국어, 실시간, 팔레트 자동 | WPlace 전용 |
 
 ---
 
@@ -271,39 +468,140 @@ Negative: blurry, smooth shading, 3D render,
 
 ---
 
-## 🚀 권장 워크플로우 (초보자용)
+## 🐍 Python 로컬 픽셀 변환기 (직접 제작)
+
+위키 저장소에 포함된 완전 무료 Python 스크립트
+
+### 특징
+- ✅ 완전 오프라인 동작
+- ✅ 배치 처리 (폴더 일괄 변환)
+- ✅ 4가지 프리셋 팔레트 (PICO-8, NES, Game Boy, Sweetie-16)
+- ✅ Floyd-Steinberg 디더링
+- ✅ k-means 색상 축소
+- ✅ 병렬 처리 지원
+
+### 설치
+
+```bash
+cd scripts/
+pip install -r requirements.txt
+```
+
+### 사용법
+
+**단일 이미지 변환**:
+```bash
+# 기본 (64px, 16색)
+python pixel_converter.py character.png
+
+# PICO-8 팔레트 + 디더링
+python pixel_converter.py character.png -w 64 -p pico8 -d
+
+# 출력 경로 지정
+python pixel_converter.py input.png -o output.png -w 32 -p gameboy
+```
+
+**배치 변환** (폴더 전체):
+```bash
+# 폴더 내 모든 이미지 변환
+python batch_converter.py my_images/ -w 64 -p pico8
+
+# 병렬 처리 8개
+python batch_converter.py sprites/ -w 32 -p nes -j 8 -d
+```
+
+### 옵션
+
+| 옵션 | 설명 | 기본값 |
+|------|------|--------|
+| `-w, --width` | 목표 너비 (픽셀) | 64 |
+| `-c, --colors` | 색상 수 | 16 |
+| `-p, --palette` | 프리셋 팔레트 (pico8/nes/gameboy/sweetie16) | - |
+| `-d, --dither` | Floyd-Steinberg 디더링 | False |
+| `-o, --output` | 출력 경로 | input_pixel.png |
+| `-j, --jobs` | 병렬 처리 수 (배치 전용) | 4 |
+
+### 내부 구조
+
+```python
+class PixelArtConverter:
+    def convert(img, width, colors, palette, dither):
+        # 1. Nearest Neighbor 리사이즈
+        img = resize_nearest_neighbor(img, width)
+        
+        # 2-A. 팔레트 매핑 (프리셋 사용 시)
+        if palette:
+            img = apply_palette(img, palette_colors)
+        
+        # 2-B. k-means 색상 축소 (자동)
+        else:
+            img = quantize_colors_kmeans(img, colors)
+        
+        # 3. 디더링 (선택)
+        if dither:
+            img = floyd_steinberg_dither(img, palette)
+        
+        return img
+```
+
+---
+
+## 🚀 권장 워크플로우 (업데이트)
 
 ### 빠른 프로토타입
 ```
 GPT 이미지 생성 
   ↓
-True Pixel 자동 변환 ($49 일회성)
+Image-to-Pixel 웹 (무료) 또는 Python 스크립트
   ↓
 Unity 임포트 (Filter Mode: Point)
 ```
 
-### 고품질 제작
+### 고품질 제작 (추천 ⭐)
 ```
 GPT 이미지 생성 (고해상도)
   ↓
 비디오 생성 또는 프레임 연속 생성
   ↓
-True Pixel 자동 변환
+PixelAfterAll 노드 변환 ($18)
   ↓
 Aseprite 수동 정리 (픽셀 보정)
   ↓
 Unity 애니메이션 클립
 ```
 
-### 무료 오픈소스
+### 무료 오픈소스 (완전 로컬)
 ```
 GPT 이미지 생성
   ↓
-ComfyUI + Pixel Art LoRA
+Python pixel_converter.py (배치 처리)
   ↓
-Piskel 온라인 정리
+Aseprite 정리 (선택)
   ↓
 Unity 임포트
+```
+
+### 3D 파이프라인 (일관성 최고)
+```
+Blender 3D 모델 + Mixamo 애니메이션
+  ↓
+Orthographic 렌더 (Toon Shader, 저해상도)
+  ↓
+Python 배치 변환 또는 PixelAfterAll
+  ↓
+Aseprite 도트 감성 리터칭 (던파 방식)
+  ↓
+Unity 통합
+```
+
+### 던파 스타일 (최고 품질)
+```
+1. ComfyUI + Pixel LoRA로 고해상도 픽셀스타일 생성
+2. 8배 다운스케일 (768x1344 → 96x168)
+3. PixelAfterAll 색상 제한 + 디더링
+4. Aseprite 수작업 리터칭 (핵심!)
+5. 캐릭터 LoRA 학습 (일관성)
+6. Unity 애니메이션
 ```
 
 ---
@@ -311,11 +609,19 @@ Unity 임포트
 ## 📚 참고 자료
 
 ### 도구 링크
+- **Image-to-Pixel**: https://tezumie.github.io/Image-to-Pixel/
+- **Pixel-Perfect Converter**: https://github.com/Void8Bit/Pixel-Perfect-AI-Art-Converter
+- **PixelAfterAll**: https://masuone.itch.io/pixel-after-all
 - **True Pixel**: https://sorceress.games/pages/true-pixel
+- **Pixel Snapper**: https://www.spritefusion.com/pixel-snapper
+- **wdot**: https://noipung.github.io/wdot/
 - **Aseprite**: https://www.aseprite.org
 - **PixelLab**: https://www.pixellab.ai
-- **Piskel**: https://www.piskelapp.com
-- **Spritesheet Generator**: https://spritesheetgenerator.online
+
+### Blender 3D → 픽셀아트
+- **Blender**: https://www.blender.org
+- **Mixamo**: https://www.mixamo.com (무료 리깅/애니메이션)
+- **Sprytile**: Blender 픽셀 타일 애드온
 
 ### 색상 팔레트
 - **Lospec**: https://lospec.com/palette-list (픽셀아트 팔레트 DB)
@@ -323,10 +629,16 @@ Unity 임포트
 - **NES**: 54색 클래식 팔레트
 - **Game Boy**: 4색 모노크롬
 
-### 튜토리얼
-- **Aseprite Animation Tutorial**: YouTube - Saultoons
-- **Pixel Art Workflow**: DevDude.Unreal 채널
-- **Unity Pixel Perfect**: Unity Learn
+### 커뮤니티 & 튜토리얼
+- **디시인사이드 게임 개발**: https://gall.dcinside.com/mgallery/board/lists/?id=game_dev
+- **masuone 작가**: https://x.com/masuone_ (PixelAfterAll 제작자)
+- **Reddit r/blender**: 3D → 픽셀아트 워크플로우
+- **DevDude.Unreal**: YouTube - 픽셀아트 튜토리얼
+
+### 공식 문서
+- **Unity Pixel Perfect**: https://docs.unity3d.com/Packages/com.unity.2d.pixel-perfect
+- **Aseprite Sprite Sheet**: https://www.aseprite.org/docs/sprite-sheet
+- **Blender Orthographic Camera**: https://docs.blender.org/manual/en/latest/render/cameras.html
 
 ---
 

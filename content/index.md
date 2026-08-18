@@ -18,117 +18,111 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 360px;
+  min-height: 400px;
   margin: 2rem 0 3rem;
-  perspective: 1400px;
-  padding-top: 1rem;
+  perspective: 1600px;
+  padding: 2rem 0;
 }
-/* 카드 기본: 깔끔한 디자인 + 반원(rotateY) 배치 */
+/* 카드: 전체가 3D로 기울어짐 (내부가 아니라 카드 자체) */
 .card {
   --fan: 0deg;
   position: relative;
-  width: 160px;
+  width: 170px;
   aspect-ratio: 5 / 7;
   cursor: pointer;
   transform-origin: 50% 100%;
   transform: rotateY(var(--fan));
   transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s, filter 0.3s;
-  border-radius: 14px;
-  border: 1px solid var(--border, rgba(128,128,128,0.35));
-  background: var(--card, #1a1a22);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+  border-radius: 16px;
   overflow: hidden;
   z-index: 1;
-  margin: 0 -12px;
+  margin: 0 -14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+  background: #14141c;
 }
-/* 반원 배치: 카드들이 중심축 기준으로 휘어짐 */
-.card:nth-child(1) { --fan: 32deg; }
-.card:nth-child(2) { --fan: 11deg; }
-.card:nth-child(3) { --fan: -11deg; }
-.card:nth-child(4) { --fan: -32deg; }
+/* 반원 배치: 카드 전체가 중심축 기준으로 휘어짐 */
+.card:nth-child(1) { --fan: 30deg; }
+.card:nth-child(2) { --fan: 10deg; }
+.card:nth-child(3) { --fan: -10deg; }
+.card:nth-child(4) { --fan: -30deg; }
 
+/* 호버: 카드 전체가 앞으로 나오며 살짝 올라옴 */
 .card:hover {
-  transform: rotateY(var(--fan)) translateZ(40px) scale(1.06);
-  box-shadow: 0 18px 36px rgba(0,0,0,0.55);
+  transform: rotateY(var(--fan)) translateZ(50px) translateY(-10px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
   z-index: 60;
 }
-/* 선택(확대) 상태: 중앙으로 모이고 정면 */
+/* 선택(확대): 카드 전체가 중앙으로, 정면 */
 .card.selected {
-  transform: rotateY(0deg) translateZ(80px) scale(1.45);
+  transform: rotateY(0deg) translateZ(90px) scale(1.4);
   z-index: 100;
   transition: transform 0.45s cubic-bezier(0.2, 1.2, 0.3, 1);
 }
 .card.selected:hover {
-  transform: rotateY(0deg) translateZ(80px) scale(1.45);
+  transform: rotateY(0deg) translateZ(90px) scale(1.4);
 }
 
-/* 카드 내용 */
-.card-inner {
+/* 카드 내용: 백그라운드 이미지 + 블러 + 반투명 레이어 + 텍스트 */
+.card-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: blur(6px) brightness(0.5);
+  transform: scale(1.1);
+}
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.55) 100%);
+}
+.card-content {
   position: absolute;
   inset: 0;
   display: flex;
   flex-direction: column;
-  padding: 12px;
-  transform-style: preserve-3d;
-}
-.card-art {
-  flex: 1;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #0d0d14;
-  position: relative;
-}
-.card-art img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.card-art-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at 50% 25%, rgba(255,255,255,0.08), transparent 60%);
-  pointer-events: none;
-}
-.card-info {
-  margin-top: 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
   text-align: center;
+  gap: 6px;
 }
-.card-icon { font-size: 1.6rem; line-height: 1; margin-bottom: 2px; }
-.card-title { font-size: 0.95rem; font-weight: 700; color: var(--foreground, #eee); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.card-sub { font-size: 0.65rem; opacity: 0.5; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 1px; }
+.card-icon { font-size: 2.2rem; line-height: 1; filter: drop-shadow(0 2px 6px rgba(0,0,0,0.5)); }
+.card-title { font-size: 1.05rem; font-weight: 700; color: #fff; text-shadow: 0 1px 4px rgba(0,0,0,0.7); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.card-sub { font-size: 0.68rem; opacity: 0.75; color: #ddd; text-transform: uppercase; letter-spacing: 0.08em; }
 .card-badge {
   display: inline-block;
-  font-size: 0.65rem;
-  padding: 2px 10px;
-  margin-top: 6px;
+  font-size: 0.68rem;
+  padding: 3px 12px;
+  margin-top: 4px;
   border-radius: 999px;
-  background: rgba(128,128,128,0.18);
-  color: var(--gray, #aaa);
-  border: 1px solid rgba(128,128,128,0.25);
+  background: rgba(0,0,0,0.5);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.25);
   white-space: nowrap;
+  backdrop-filter: blur(4px);
 }
 
 /* 툴팁 */
 .card-tooltip {
   position: absolute;
   left: 50%;
-  bottom: -34px;
+  bottom: -36px;
   transform: translateX(-50%);
-  background: rgba(0,0,0,0.88);
+  background: rgba(0,0,0,0.9);
   color: #eee;
   font-size: 0.7rem;
   padding: 6px 12px;
   border-radius: 8px;
   width: max-content;
-  max-width: 220px;
+  max-width: 240px;
   text-align: center;
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.25s;
   z-index: 200;
-  border: 1px solid rgba(128,128,128,0.4);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.2);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
 .card:hover .card-tooltip,
 .card.selected .card-tooltip {
@@ -139,7 +133,7 @@
 <script>
 (function () {
   var selected = null;
-  var maxTilt = 14;
+  var maxTilt = 16;
 
   function buildCard(card) {
     var icon = card.getAttribute('data-icon');
@@ -150,14 +144,13 @@
     var img = card.getAttribute('data-img');
 
     card.innerHTML =
-      '<div class="card-inner">' +
-        '<div class="card-art"><img src="' + img + '" alt="' + title + '"/><div class="card-art-glow"></div></div>' +
-        '<div class="card-info">' +
-          (icon ? '<div class="card-icon">' + icon + '</div>' : '') +
-          '<div class="card-title">' + title + '</div>' +
-          (sub ? '<div class="card-sub">' + sub + '</div>' : '') +
-          (badge ? '<div class="card-badge">' + badge + '</div>' : '') +
-        '</div>' +
+      '<div class="card-bg" style="background-image:url(' + img + ')"></div>' +
+      '<div class="card-overlay"></div>' +
+      '<div class="card-content">' +
+        (icon ? '<div class="card-icon">' + icon + '</div>' : '') +
+        '<div class="card-title">' + title + '</div>' +
+        (sub ? '<div class="card-sub">' + sub + '</div>' : '') +
+        (badge ? '<div class="card-badge">' + badge + '</div>' : '') +
       '</div>' +
       '<div class="card-tooltip">' + desc + '</div>';
   }
@@ -167,20 +160,30 @@
     cards.forEach(function (card) {
       buildCard(card);
       var href = card.getAttribute('data-href');
-      var inner = card.querySelector('.card-inner');
       var lastClick = 0;
 
-      // 마우스 이동: 선택 상태에서 3D 틸트
+      // 마우스 이동: 카드 전체가 기울어짐 (내부가 아니라)
       card.addEventListener('mousemove', function (e) {
         var rect = card.getBoundingClientRect();
         var px = (e.clientX - rect.left) / rect.width;   // 0~1
         var py = (e.clientY - rect.top) / rect.height;   // 0~1
         var rotY = (px - 0.5) * 2 * maxTilt;
         var rotX = (0.5 - py) * 2 * maxTilt;
-        inner.style.transform = 'rotateX(' + rotX.toFixed(1) + 'deg) rotateY(' + rotY.toFixed(1) + 'deg) translateZ(0px)';
+
+        if (card.classList.contains('selected')) {
+          // 선택 상태: 카드 전체가 마우스 따라 기울어짐
+          card.style.transform = 'rotateY(0deg) translateZ(90px) scale(1.4) rotateX(' + rotX.toFixed(1) + 'deg) rotateY(' + rotY.toFixed(1) + 'deg)';
+        } else {
+          // 호버 상태: 카드 전체가 살짝 기울어짐
+          card.style.transform = 'rotateY(var(--fan)) translateZ(50px) translateY(-10px) scale(1.05) rotateX(' + (rotX*0.5).toFixed(1) + 'deg) rotateY(' + (rotY*0.5).toFixed(1) + 'deg)';
+        }
       });
       card.addEventListener('mouseleave', function () {
-        inner.style.transform = '';
+        if (card.classList.contains('selected')) {
+          card.style.transform = 'rotateY(0deg) translateZ(90px) scale(1.4)';
+        } else {
+          card.style.transform = '';
+        }
       });
 
       // 클릭: 1번 = 확대/선택, 2번 = 이동

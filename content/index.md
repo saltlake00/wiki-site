@@ -142,9 +142,11 @@
 <script>
 
 (function () {
-  var selected = null;
   var maxTilt = 16;
+  var selectedCard = null;
+  var lastSelectTime = 0;   // 전역 쿨다운 (확대 직후 바로 이동 방지)
 
+  // 카드 내부 내용 채우기 (빌드)
   function buildCard(card) {
     var icon = card.getAttribute('data-icon');
     var title = card.getAttribute('data-title');
@@ -164,80 +166,97 @@
         (badge ? '<div class="card-badge">' + badge + '</div>' : '') +
       '</div>' +
       '<div class="card-tooltip">' + desc + '</div>';
+    card.dataset.built = '1';
   }
 
-  function initCards() {
-    var cards = document.querySelectorAll('.card');
-    cards.forEach(function (card) {
-      if (card.dataset.built) return;
-      card.dataset.built = '1';
+  // 현재 홈의 카드들 빌드 (이미 빌드됐으면 스킵)
+  function ensureCardsBuilt() {
+    document.querySelectorAll('.card:not([data-built])').forEach(function (card) {
       buildCard(card);
-      var href = card.getAttribute('data-href');
-
-      card.addEventListener('mousemove', function (e) {
-        var rect = card.getBoundingClientRect();
-        var px = (e.clientX - rect.left) / rect.width;
-        var py = (e.clientY - rect.top) / rect.height;
-        var rotY = (px - 0.5) * 2 * maxTilt;
-        var rotX = (0.5 - py) * 2 * maxTilt;
-        if (card.classList.contains('selected')) {
-          card.style.transform = 'rotateY(0deg) translateZ(90px) scale(1.4) rotateX(' + rotX.toFixed(1) + 'deg) rotateY(' + rotY.toFixed(1) + 'deg)';
-        } else {
-          card.style.transform = 'rotateY(var(--fan)) translateZ(50px) translateY(-10px) scale(1.05) rotateX(' + (rotX*0.5).toFixed(1) + 'deg) rotateY(' + (rotY*0.5).toFixed(1) + 'deg)';
-        }
-      });
-      card.addEventListener('mouseleave', function () {
-        if (card.classList.contains('selected')) {
-          card.style.transform = 'rotateY(0deg) translateZ(90px) scale(1.4)';
-        } else {
-          card.style.transform = '';
-        }
-      });
-
-      var lastSelectTime = 0;   // 확대된 시각 (더블클릭/연타 방지용 쿨다운)
-      card.addEventListener('click', function (e) {
-        e.stopPropagation();
-        var now = Date.now();
-
-        // 이미 선택(확대)된 상태
-        if (card.classList.contains('selected')) {
-          // 확대된 직후(쿨다운 600ms 이내) 클릭은 무시 — 확대 화면을 볼 시간 확보
-          if (now - lastSelectTime < 600) return;
-          window.location.href = href;
-          return;
-        }
-
-        // 모든 카드 선택 해제 후, 이 카드만 활성화
-        var allCards = document.querySelectorAll('.card');
-        allCards.forEach(function (c) {
-          c.classList.remove('selected');
-          c.style.transform = '';
-        });
-        card.classList.add('selected');
-        selected = card;
-        lastSelectTime = Date.now();
-      });
     });
+  }
 
-    document.addEventListener('click', function (e) {
-      if (!e.target.closest('.card') && selected) {
-        selected.classList.remove('selected');
-        selected = null;
+  // 클릭 처리 — document에 위임 (SPA 전환 후에도 유지, 중복 없음)
+  document.addEventListener('click', function (e) {
+    var card = e.target.closest('.card');
+    var now = Date.now();
+
+    if (!card) {
+      // 카드 바깥 클릭 → 선택 해제
+      if (selectedCard) {
+        selectedCard.classList.remove('selected');
+        selectedCard = null;
+      }
+      return;
+    }
+
+    var href = card.getAttribute('data-href');
+
+    // 확대(선택) 상태에서 클릭
+    if (card.classList.contains('selected')) {
+      // 확대 직후(600ms) 클릭은 무시 — 확대 화면을 볼 시간 확보
+      if (now - lastSelectTime < 600) return;
+      window.location.href = href;
+      return;
+    }
+
+    // 일반 카드 클릭 → 확대 (하나만)
+    document.querySelectorAll('.card').forEach(function (c) {
+      c.classList.remove('selected');
+    });
+    card.classList.add('selected');
+    selectedCard = card;
+    lastSelectTime = now;
+  });
+
+  // 마우스 이동 → 카드 전체 3D 틸트 (마우스 리스너는 카드별)
+  document.addEventListener('mouseover', function (e) {
+    var card = e.target.closest('.card');
+    if (!card || card.dataset.tiltInit) return;
+    card.dataset.tiltInit = '1';
+
+    card.addEventListener('mousemove', function (ev) {
+      var rect = card.getBoundingClientRect();
+      var px = (ev.clientX - rect.left) / rect.width;
+      var py = (ev.clientY - rect.top) / rect.height;
+      var rotY = (px - 0.5) * 2 * maxTilt;
+      var rotX = (0.5 - py) * 2 * maxTilt;
+      if (card.classList.contains('selected')) {
+        card.style.transform = 'rotateY(0deg) translateZ(90px) scale(1.4) rotateX(' + rotX.toFixed(1) + 'deg) rotateY(' + rotY.toFixed(1) + 'deg)';
+      } else {
+        card.style.transform = 'rotateY(var(--fan)) translateZ(50px) translateY(-10px) scale(1.05) rotateX(' + (rotX*0.5).toFixed(1) + 'deg) rotateY(' + (rotY*0.5).toFixed(1) + 'deg)';
       }
     });
+    card.addEventListener('mouseleave', function () {
+      if (card.classList.contains('selected')) {
+        card.style.transform = 'rotateY(0deg) translateZ(90px) scale(1.4)';
+      } else {
+        card.style.transform = '';
+      }
+    });
+  });
+
+  // 초기 빌드
+  function init() {
+    ensureCardsBuilt();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initCards);
-  } else {
-    initCards();
-  }
+  // Quartz SPA 페이지 전환: 홈에 돌아오면 카드 다시 빌드 (내용 사라짐 방지)
   document.addEventListener('nav', function () {
     if (document.querySelector('.card')) {
-      document.querySelectorAll('.card').forEach(function (c) { delete c.dataset.built; });
-      initCards();
-      var sel = document.querySelector('.card.selected');
-      if (sel) sel.classList.remove('selected');
+      // DOM이 교체됐을 수 있으므로 빌드 플래그 리셋 후 재빌드
+      document.querySelectorAll('.card').forEach(function (c) {
+        delete c.dataset.built;
+        delete c.dataset.tiltInit;
+      });
+      ensureCardsBuilt();
+      if (selectedCard) { selectedCard.classList.remove('selected'); selectedCard = null; }
+      lastSelectTime = 0;
     }
   });
 })();

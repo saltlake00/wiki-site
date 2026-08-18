@@ -10,7 +10,22 @@ pip install -r requirements.txt
 
 ## 사용법
 
-### 단일 이미지 변환
+### GUI 버전 (권장 ⭐)
+
+```bash
+# GUI 실행
+python pixel_converter_gui.py
+```
+
+**기능**:
+- 🖱️ 드래그앤드롭 또는 파일 선택
+- 👁️ 실시간 미리보기
+- ⚙️ 슬라이더로 간편한 설정
+- 📊 진행 상태 표시
+
+### CLI 버전
+
+#### 단일 이미지 변환
 
 ```bash
 # 기본 변환 (64px, 16색)
@@ -111,6 +126,14 @@ Inspector 설정:
 - Sprite Mode: Single 또는 Multiple
 ```
 
-## 라이선스
+## 📦 프로젝트 구조
 
-MIT License
+```
+scripts/
+├── pixel_converter_gui.py    # ⭐ GUI 버전 (권장)
+├── pixel_converter.py         # CLI 단일 변환
+├── batch_converter.py         # CLI 배치 변환
+├── video_to_spritesheet.py   # 비디오 → 스프라이트시트
+├── requirements.txt           # 의존성
+└── README.md                  # 이 파일
+```

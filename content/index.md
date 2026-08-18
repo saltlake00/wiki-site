@@ -45,16 +45,16 @@
   background: #14141c;
   border: 1px solid rgba(255,255,255,0.18);
 }
-.card:nth-child(1) { --fan: 32deg; }
-.card:nth-child(2) { --fan: 11deg; }
-.card:nth-child(3) { --fan: -11deg; }
-.card:nth-child(4) { --fan: -32deg; }
-.card:nth-child(5) { --fan: 45deg; }
-.card:nth-child(6) { --fan: 26deg; }
-.card:nth-child(7) { --fan: 8deg; }
-.card:nth-child(8) { --fan: -8deg; }
-.card:nth-child(9) { --fan: -26deg; }
-.card:nth-child(10) { --fan: -45deg; }
+.card:nth-child(1) { --fan: 24deg; }
+.card:nth-child(2) { --fan: 8deg; }
+.card:nth-child(3) { --fan: -8deg; }
+.card:nth-child(4) { --fan: -24deg; }
+.card:nth-child(5) { --fan: 40deg; }
+.card:nth-child(6) { --fan: 16deg; }
+.card:nth-child(7) { --fan: 0deg; }
+.card:nth-child(8) { --fan: -16deg; }
+.card:nth-child(9) { --fan: -40deg; }
+.card:nth-child(10) { --fan: -56deg; }
 .card:hover {
   transform: rotateY(var(--fan)) translateZ(50px) translateY(-10px) scale(1.05);
   box-shadow: 0 20px 40px rgba(0,0,0,0.6);

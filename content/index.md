@@ -63,6 +63,11 @@
 .card.selected:hover {
   transform: rotateY(0deg) translateZ(90px) scale(1.4);
 }
+/* 활성화된 카드 하나만 강조: 나머지는 흐리게 */
+.deck:has(.card.selected) .card:not(.selected) {
+  opacity: 0.4;
+  filter: grayscale(0.4) brightness(0.6);
+}
 
 /* 카드 내용: 백그라운드 이미지 + 블러 + 반투명 레이어 + 텍스트 */
 .card-bg {
@@ -166,7 +171,6 @@
     cards.forEach(function (card) {
       buildCard(card);
       var href = card.getAttribute('data-href');
-      var lastClick = 0;
 
       // 마우스 이동: 카드 전체가 기울어짐 (내부가 아니라)
       card.addEventListener('mousemove', function (e) {
@@ -192,21 +196,21 @@
         }
       });
 
-      // 클릭: 1번 = 확대/선택, 2번 = 이동
+      // 클릭: 안 된 카드 클릭 = 선택(하나만 활성), 이미 선택된 카드 클릭 = 이동
       card.addEventListener('click', function (e) {
         e.stopPropagation();
-        var now = Date.now();
-        if (now - lastClick < 500) {
-          window.location.href = href;
-          return;
-        }
-        lastClick = now;
 
+        // 이미 선택된 카드를 다시 클릭 → 페이지 이동
         if (card.classList.contains('selected')) {
           window.location.href = href;
           return;
         }
-        if (selected) selected.classList.remove('selected');
+
+        // 모든 카드 선택 해제 후, 이 카드만 활성화 (하나만)
+        var allCards = document.querySelectorAll('.card');
+        allCards.forEach(function (c) {
+          c.classList.remove('selected');
+        });
         card.classList.add('selected');
         selected = card;
       });

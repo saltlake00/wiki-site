@@ -475,10 +475,12 @@ ditheredCanvas = await pixelate({
 ### 특징
 - ✅ 완전 오프라인 동작
 - ✅ 배치 처리 (폴더 일괄 변환)
+- ✅ **비디오 → 스프라이트시트 자동 변환** 🆕
 - ✅ 4가지 프리셋 팔레트 (PICO-8, NES, Game Boy, Sweetie-16)
 - ✅ Floyd-Steinberg 디더링
 - ✅ k-means 색상 축소
 - ✅ 병렬 처리 지원
+- ✅ 자동 배경 제거
 
 ### 설치
 
@@ -496,22 +498,33 @@ python pixel_converter.py character.png
 
 # PICO-8 팔레트 + 디더링
 python pixel_converter.py character.png -w 64 -p pico8 -d
-
-# 출력 경로 지정
-python pixel_converter.py input.png -o output.png -w 32 -p gameboy
 ```
 
 **배치 변환** (폴더 전체):
 ```bash
-# 폴더 내 모든 이미지 변환
-python batch_converter.py my_images/ -w 64 -p pico8
-
 # 병렬 처리 8개
 python batch_converter.py sprites/ -w 32 -p nes -j 8 -d
 ```
 
+**비디오 → 스프라이트시트** 🆕:
+```bash
+# AI 비디오 → 픽셀 스프라이트시트
+python video_to_spritesheet.py walk.mp4
+
+# FPS, 팔레트, 배경 제거
+python video_to_spritesheet.py character.mp4 \
+  -fps 8 -w 64 -p pico8 --remove-bg
+
+# 고급 옵션
+python video_to_spritesheet.py attack.mp4 \
+  -fps 12 -w 128 -c 32 \
+  --columns 8 --spacing 2 \
+  --max-frames 24 -d
+```
+
 ### 옵션
 
+#### 이미지 변환
 | 옵션 | 설명 | 기본값 |
 |------|------|--------|
 | `-w, --width` | 목표 너비 (픽셀) | 64 |
@@ -521,8 +534,24 @@ python batch_converter.py sprites/ -w 32 -p nes -j 8 -d
 | `-o, --output` | 출력 경로 | input_pixel.png |
 | `-j, --jobs` | 병렬 처리 수 (배치 전용) | 4 |
 
+#### 비디오 → 스프라이트시트 🆕
+| 옵션 | 설명 | 기본값 |
+|------|------|--------|
+| `-fps, --target-fps` | 추출 FPS | 8 |
+| `-w, --width` | 픽셀 너비 | 64 |
+| `-c, --colors` | 색상 수 | 16 |
+| `-p, --palette` | 프리셋 팔레트 | - |
+| `-d, --dither` | 디더링 | False |
+| `--remove-bg` | 배경 제거 (밝은 단색 배경) | False |
+| `--bg-threshold` | 배경 임계값 (0-255) | 240 |
+| `--columns` | 스프라이트시트 열 수 | 자동 |
+| `--spacing` | 프레임 간 간격 (픽셀) | 0 |
+| `--max-frames` | 최대 프레임 수 | 전체 |
+| `--anchor` | 정렬 위치 (bottom-center/center/top-left) | bottom-center |
+
 ### 내부 구조
 
+**이미지 변환**:
 ```python
 class PixelArtConverter:
     def convert(img, width, colors, palette, dither):
@@ -542,6 +571,32 @@ class PixelArtConverter:
             img = floyd_steinberg_dither(img, palette)
         
         return img
+```
+
+**비디오 → 스프라이트시트** 🆕:
+```python
+class VideoToSpriteSheet:
+    def convert(video, fps, width, palette):
+        # 1. 프레임 추출 (FPS 조절)
+        frames = extract_frames(video, target_fps=fps)
+        
+        # 2. 배경 제거 (선택)
+        if remove_bg:
+            frames = remove_background(frames)
+        
+        # 3. 프레임 정규화 (동일 크기, bottom-center 정렬)
+        frames = normalize_frame_size(frames, anchor='bottom-center')
+        
+        # 4. 각 프레임 픽셀아트 변환
+        pixel_frames = [
+            pixel_converter.convert(f, width, palette)
+            for f in frames
+        ]
+        
+        # 5. 스프라이트시트 생성 (그리드 배열)
+        sprite_sheet = create_sprite_sheet(pixel_frames, columns)
+        
+        return sprite_sheet
 ```
 
 ---

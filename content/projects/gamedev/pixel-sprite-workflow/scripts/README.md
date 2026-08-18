@@ -1,6 +1,6 @@
 # 픽셀아트 변환기 (Pixel Art Converter)
 
-AI 생성 이미지를 True Pixel Art로 변환하는 Python 도구
+AI 생성 이미지와 비디오를 True Pixel Art로 변환하는 Python 도구
 
 ## 설치
 
@@ -70,6 +70,22 @@ python batch_converter.py my_images/ -w 64 -p nes -j 8
 ### Sweetie-16 (16색)
 현대적 픽셀아트 팔레트
 
+### 비디오 → 스프라이트시트
+
+```bash
+# 기본 (8 FPS, 64px, 16색)
+python video_to_spritesheet.py walk.mp4
+
+# PICO-8 스타일 + 배경 제거
+python video_to_spritesheet.py character.mp4 -fps 12 -w 64 -p pico8 --remove-bg
+
+# 고해상도, 8x3 그리드
+python video_to_spritesheet.py attack.mp4 -fps 10 -w 128 -c 32 --columns 8
+
+# NES 팔레트 + 디더링, 최대 24프레임
+python video_to_spritesheet.py jump.mp4 -p nes -d --max-frames 24
+```
+
 ## 예제
 
 ```bash
@@ -79,8 +95,8 @@ python pixel_converter.py character.png -w 64 -p pico8 -d
 # 폴더 일괄 변환 (32px, Game Boy 스타일)
 python batch_converter.py sprites/ -w 32 -p gameboy -j 8
 
-# 커스텀 색상 수 (팔레트 없이)
-python pixel_converter.py bg.png -w 128 -c 32
+# AI 비디오 → 픽셀 스프라이트시트 (자동 배경 제거)
+python video_to_spritesheet.py walk_animation.mp4 -fps 8 -w 64 -p pico8 --remove-bg
 ```
 
 ## Unity 통합

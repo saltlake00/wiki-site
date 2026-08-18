@@ -1,182 +1,290 @@
 # 🧠 LLM Wiki
 
-> 개인 지식 베이스. 카드에 마우스를 올리면 3D로 기울어져요. 클릭하면 이동합니다.
+> 개인 지식 베이스. 손에 쥔 카드처럼 펼쳐진 카드를 탐색해보세요.
+> **호버** = 살짝 올라옴 · **클릭 1번** = 확대+마우스 따라 기울임 · **클릭 2번** = 페이지 이동
 
-## 🏗️ 프로젝트
+<div class="hearth-deck">
 
-<div class="deck">
-
-<div class="tilt-card" data-href="projects/unity/링스택/">
-  <div class="tilt-card-inner">
-    <div class="card-corner top-left">⚙️</div>
-    <div class="card-face">
-      <div class="card-icon">⚙️</div>
-      <div class="card-title">링 스택</div>
-      <div class="card-sub">Ring Stack</div>
+<div class="hearth-card" data-href="projects/unity/링스택/" data-title="링 스택">
+  <div class="hc-inner">
+    <div class="hc-frame">
+      <div class="hc-art">
+        <img src="assets/cards/ring-stack.svg" alt="링 스택" />
+        <div class="hc-art-overlay"></div>
+      </div>
+      <div class="hc-name">⚙️ 링 스택</div>
+      <div class="hc-stats">
+        <span class="hc-stat">Unity</span>
+        <span class="hc-stat gem">게임</span>
+      </div>
     </div>
-    <div class="card-bottom">
-      <div class="card-badge">Unity · 게임</div>
-      <div class="card-desc">스택 장르의 타이밍 탭 + 정렬 판정을 회전으로 재구성한 Unity 게임.</div>
-    </div>
-    <div class="card-corner bottom-right">⚙️</div>
+    <div class="hc-tooltip">720슬롯 AND 판정 · 절차적 메시 · NPR 셰이더</div>
   </div>
 </div>
 
-<div class="tilt-card" data-href="projects/">
-  <div class="tilt-card-inner">
-    <div class="card-corner top-left">📁</div>
-    <div class="card-face">
-      <div class="card-icon">📁</div>
-      <div class="card-title">모든 프로젝트</div>
-      <div class="card-sub">All Projects</div>
+<div class="hearth-card" data-href="projects/" data-title="모든 프로젝트">
+  <div class="hc-inner">
+    <div class="hc-frame">
+      <div class="hc-art">
+        <img src="assets/cards/all-projects.svg" alt="모든 프로젝트" />
+        <div class="hc-art-overlay"></div>
+      </div>
+      <div class="hc-name">📁 모든 프로젝트</div>
+      <div class="hc-stats">
+        <span class="hc-stat">전체</span>
+        <span class="hc-stat gem">보기</span>
+      </div>
     </div>
-    <div class="card-bottom">
-      <div class="card-badge">전체 보기</div>
-      <div class="card-desc">프로젝트 도메인 전체 목록과 하위 구조 탐색.</div>
-    </div>
-    <div class="card-corner bottom-right">📁</div>
+    <div class="hc-tooltip">프로젝트 도메인 전체 목록과 하위 구조 탐색</div>
   </div>
 </div>
 
-</div>
-
-## 🤖 LLM
-
-<div class="deck">
-
-<div class="tilt-card" data-href="llm/사용로그">
-  <div class="tilt-card-inner">
-    <div class="card-corner top-left">📝</div>
-    <div class="card-face">
-      <div class="card-icon">📝</div>
-      <div class="card-title">LLM 사용로그</div>
-      <div class="card-sub">Usage Log</div>
+<div class="hearth-card" data-href="llm/사용로그" data-title="LLM 사용로그">
+  <div class="hc-inner">
+    <div class="hc-frame">
+      <div class="hc-art">
+        <img src="assets/cards/llm-usage.svg" alt="LLM 사용로그" />
+        <div class="hc-art-overlay"></div>
+      </div>
+      <div class="hc-name">🤖 LLM 사용로그</div>
+      <div class="hc-stats">
+        <span class="hc-stat">기록</span>
+        <span class="hc-stat gem">Log</span>
+      </div>
     </div>
-    <div class="card-bottom">
-      <div class="card-badge">사용 기록</div>
-      <div class="card-desc">날짜별 LLM 사용 기록. 무엇을 했고 뭘 배웠는지 append-only로 쌓음.</div>
-    </div>
-    <div class="card-corner bottom-right">📝</div>
+    <div class="hc-tooltip">날짜별 LLM 사용 기록 · append-only</div>
   </div>
 </div>
 
-<div class="tilt-card" data-href="llm/프롬프트-패턴">
-  <div class="tilt-card-inner">
-    <div class="card-corner top-left">💡</div>
-    <div class="card-face">
-      <div class="card-icon">💡</div>
-      <div class="card-title">프롬프트 패턴</div>
-      <div class="card-sub">Prompt Patterns</div>
+<div class="hearth-card" data-href="llm/프롬프트-패턴" data-title="프롬프트 패턴">
+  <div class="hc-inner">
+    <div class="hc-frame">
+      <div class="hc-art">
+        <img src="assets/cards/prompt-patterns.svg" alt="프롬프트 패턴" />
+        <div class="hc-art-overlay"></div>
+      </div>
+      <div class="hc-name">💡 프롬프트 패턴</div>
+      <div class="hc-stats">
+        <span class="hc-stat">기법</span>
+        <span class="hc-stat gem">Prompt</span>
+      </div>
     </div>
-    <div class="card-bottom">
-      <div class="card-badge">기법</div>
-      <div class="card-desc">LLM 사용 중 발견한 유용한 프롬프트/기법 모음.</div>
-    </div>
-    <div class="card-corner bottom-right">💡</div>
+    <div class="hc-tooltip">유용한 프롬프트/기법 모음</div>
   </div>
 </div>
 
 </div>
 
 <style>
-.deck {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1.4rem;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-  perspective: 1000px;
+/* 하스스톤 카드 손패 부채꼴 */
+.hearth-deck {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: -0.5rem;
+  min-height: 380px;
+  margin: 2rem 0 3rem;
+  perspective: 1600px;
+  padding-top: 2rem;
 }
-/* 포커카드 비율 5:7 */
-.tilt-card {
+.hearth-card {
+  --base-angle: 0deg;
+  position: relative;
+  width: 150px;
   aspect-ratio: 5 / 7;
   cursor: pointer;
-  transition: transform 0.15s ease-out, box-shadow 0.3s ease;
-  border-radius: 14px;
-  border: 1px solid var(--border, rgba(128,128,128,0.35));
-  background: var(--card, linear-gradient(145deg, rgba(128,128,128,0.14), rgba(128,128,128,0.04)));
-  box-shadow: 0 4px 14px rgba(0,0,0,0.12);
-  position: relative;
+  transform-origin: 50% 100%;
+  transform: rotate(var(--base-angle));
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), z-index 0s, filter 0.3s;
+  filter: drop-shadow(0 6px 16px rgba(0,0,0,0.45));
+  z-index: 1;
+}
+/* 각 카드의 부채꼴 각도 (n=4: -13.5, -4.5, 4.5, 13.5) */
+.hearth-card:nth-child(1) { --base-angle: -14deg; margin-right: -18px; }
+.hearth-card:nth-child(2) { --base-angle: -4.5deg; margin-right: -18px; }
+.hearth-card:nth-child(3) { --base-angle: 4.5deg; margin-right: -18px; }
+.hearth-card:nth-child(4) { --base-angle: 14deg; }
+
+.hearth-card:hover {
+  transform: rotate(var(--base-angle)) translateY(-24px) scale(1.12);
+  filter: drop-shadow(0 16px 28px rgba(0,0,0,0.6));
+  z-index: 50;
+}
+/* 확대/선택 상태 */
+.hearth-card.selected {
+  transform: rotate(0deg) translateY(-60px) scale(1.5);
+  z-index: 100;
+  transition: transform 0.4s cubic-bezier(0.2, 1.2, 0.3, 1);
+}
+.hearth-card.selected:hover {
+  transform: rotate(0deg) translateY(-60px) scale(1.5);
+}
+
+.hc-inner {
+  position: absolute;
+  inset: 0;
   transform-style: preserve-3d;
   will-change: transform;
 }
-.tilt-card:hover {
-  box-shadow: 0 18px 40px rgba(0,0,0,0.28);
-}
-.tilt-card-inner {
+.hc-frame {
   position: absolute;
   inset: 0;
-  padding: 0.9rem;
+  border-radius: 14px;
+  padding: 10px;
+  background: linear-gradient(160deg, #7f1d1d 0%, #450a0a 40%, #1a0b2e 100%);
+  border: 2px solid #f59e0b;
+  box-shadow: inset 0 0 0 2px rgba(245,158,11,0.35), inset 0 0 30px rgba(0,0,0,0.6);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  transform-style: preserve-3d;
 }
-.card-corner { font-size: 1.2rem; opacity: 0.8; }
-.card-corner.top-left { align-self: flex-start; }
-.card-corner.bottom-right { align-self: flex-end; transform: rotate(180deg); }
-.card-face {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.hc-art {
   flex: 1;
-  gap: 0.4rem;
-  transform: translateZ(30px);
+  border-radius: 9px;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid #fbbf24;
 }
-.card-icon { font-size: 3rem; line-height: 1; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)); }
-.card-title { font-size: 1.15rem; font-weight: 700; text-align: center; }
-.card-sub { font-size: 0.7rem; opacity: 0.55; text-transform: uppercase; letter-spacing: 0.08em; }
-.card-bottom {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-  align-items: center;
-  transform: translateZ(20px);
+.hc-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
-.card-badge {
-  font-size: 0.68rem;
-  padding: 0.15rem 0.6rem;
-  border-radius: 999px;
-  background: rgba(128,128,128,0.22);
-  white-space: nowrap;
+.hc-art-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 30%, rgba(255,215,0,0.12), transparent 60%);
+  pointer-events: none;
 }
-.card-desc {
-  font-size: 0.78rem;
-  line-height: 1.4;
+.hc-name {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
   text-align: center;
-  color: var(--gray, #888);
-  opacity: 0.85;
+  color: #fde68a;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.hc-stats {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+.hc-stat {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #fbbf24;
+  background: rgba(0,0,0,0.4);
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(251,191,36,0.4);
+}
+.hc-stat.gem {
+  color: #c084fc;
+  border-color: rgba(192,132,252,0.5);
+  background: rgba(88,28,135,0.5);
+}
+.hc-tooltip {
+  position: absolute;
+  left: 50%;
+  bottom: -32px;
+  transform: translateX(-50%);
+  background: rgba(0,0,0,0.85);
+  color: #fde68a;
+  font-size: 0.68rem;
+  padding: 5px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s;
+  z-index: 200;
+  border: 1px solid rgba(251,191,36,0.4);
+}
+.hearth-card:hover .hc-tooltip,
+.hearth-card.selected .hc-tooltip {
+  opacity: 1;
+}
+
+/* 확대 상태에서 카드 상세 표시 */
+.hearth-card.selected .hc-detail {
+  display: block;
 }
 </style>
 
 <script>
 (function () {
-  function initTilt() {
-    var cards = document.querySelectorAll('.tilt-card');
+  var selected = null;
+  var maxTilt = 18;
+
+  function initCards() {
+    var cards = document.querySelectorAll('.hearth-card');
+
     cards.forEach(function (card) {
-      var maxTilt = 16;
+      var inner = card.querySelector('.hc-inner');
+      var href = card.getAttribute('data-href');
+      var lastClick = 0;
+
+      // 호버 시 살짝 올라옴 (CSS transition으로 처리됨)
+      // 마우스 이동에 따른 3D 틸트 (선택 상태에서만)
       card.addEventListener('mousemove', function (e) {
-        var rect = card.getBoundingClientRect();
-        var x = (e.clientX - rect.left) / rect.width;   // 0~1
-        var y = (e.clientY - rect.top) / rect.height;   // 0~1
-        var rotY = (x - 0.5) * 2 * maxTilt;   // -16 ~ +16
-        var rotX = (0.5 - y) * 2 * maxTilt;   // +16 ~ -16
-        card.style.transform = 'perspective(900px) rotateX(' + rotX.toFixed(1) + 'deg) rotateY(' + rotY.toFixed(1) + 'deg) scale(1.03)';
+        if (!card.classList.contains('selected')) {
+          // 선택 안 된 카드도 살짝 틸트
+          var rect = card.getBoundingClientRect();
+          var px = (e.clientX - rect.left) / rect.width;
+          var py = (e.clientY - rect.top) / rect.height;
+          var rotY = (px - 0.5) * maxTilt;
+          var rotX = (0.5 - py) * maxTilt * 0.7;
+          inner.style.transform = 'translateZ(0px) rotateX(' + rotX.toFixed(1) + 'deg) rotateY(' + rotY.toFixed(1) + 'deg)';
+        }
       });
+
       card.addEventListener('mouseleave', function () {
-        card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) scale(1)';
+        inner.style.transform = 'translateZ(0px) rotateX(0deg) rotateY(0deg)';
       });
-      card.addEventListener('click', function () {
-        var href = card.getAttribute('data-href');
-        if (href) window.location.href = href;
+
+      // 클릭 처리: 1번째 = 확대/선택, 2번째 = 이동
+      card.addEventListener('click', function (e) {
+        var now = Date.now();
+        if (now - lastClick < 500) {
+          // 더블클릭 → 페이지 이동
+          window.location.href = href;
+          return;
+        }
+        lastClick = now;
+
+        if (card.classList.contains('selected')) {
+          // 이미 선택된 상태에서 클릭 → 페이지 이동
+          window.location.href = href;
+          return;
+        }
+
+        // 이전 선택 해제
+        if (selected) {
+          selected.classList.remove('selected');
+        }
+        card.classList.add('selected');
+        selected = card;
       });
     });
+
+    // 빈 곳 클릭 시 선택 해제
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.hearth-card') && selected) {
+        selected.classList.remove('selected');
+        selected = null;
+      }
+    });
   }
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initTilt);
+    document.addEventListener('DOMContentLoaded', initCards);
   } else {
-    initTilt();
+    initCards();
   }
 })();
 </script>

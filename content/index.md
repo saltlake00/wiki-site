@@ -206,10 +206,11 @@
           return;
         }
 
-        // 모든 카드 선택 해제 후, 이 카드만 활성화 (하나만)
+        // 모든 카드의 선택 해제 + 인라인 transform 리셋
         var allCards = document.querySelectorAll('.card');
         allCards.forEach(function (c) {
           c.classList.remove('selected');
+          c.style.transform = '';   // 이전에 남은 인라인 3D transform 제거
         });
         card.classList.add('selected');
         selected = card;

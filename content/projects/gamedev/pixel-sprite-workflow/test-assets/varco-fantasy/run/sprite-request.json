@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "kind": "sprite-gen-request",
+  "engine": "component-row",
+  "character": {
+    "id": "fantasy-warrior",
+    "description": "varco3 generated fantasy warrior, 4 directions"
+  },
+  "cell": {
+    "shape": "square",
+    "width": 64,
+    "height": 96,
+    "safe_margin_x": 4,
+    "safe_margin_y": 4,
+    "size": 96
+  },
+  "chroma_key": {
+    "name": "magenta",
+    "hex": "#FF00FF",
+    "rgb": [255,0,255],
+    "selection": "fallback"
+  },
+  "states": {
+    "four_dir": {
+      "frames": 4,
+      "fps": 4,
+      "loop": true,
+      "action": "4 direction views: front, back, left, right"
+    }
+  },
+  "style": "pixel art on magenta",
+  "chroma": { "mode": "rgb", "unmix_reach": 4, "spill_max_fraction": 0.005 }
+}

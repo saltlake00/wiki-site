@@ -1,0 +1,92 @@
+{
+  "ok": true,
+  "engine": "component-row",
+  "engine_revision": "40cfc31329ff",
+  "extract_args": {},
+  "run_dir": "G:\\내 드라이브\\wiki\\projects\\gamedev\\pixel-sprite-workflow\\test-assets\\varco-fantasy\\run",
+  "cell": {
+    "shape": "square",
+    "width": 64,
+    "height": 96,
+    "safe_margin_x": 4,
+    "safe_margin_y": 4,
+    "size": 96
+  },
+  "chroma_key": {
+    "name": "magenta",
+    "hex": "#FF00FF",
+    "rgb": [
+      255,
+      0,
+      255
+    ],
+    "selection": "fallback"
+  },
+  "rows": [
+    {
+      "state": "four_dir",
+      "frames": 4,
+      "method": "components",
+      "files": [
+        "frames/four_dir/frame-0.png",
+        "frames/four_dir/frame-1.png",
+        "frames/four_dir/frame-2.png",
+        "frames/four_dir/frame-3.png"
+      ],
+      "frame_records": [
+        {
+          "index": 0,
+          "nontransparent_pixels": 2251,
+          "bbox": [
+            3,
+            22,
+            59,
+            92
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 1,
+          "nontransparent_pixels": 554,
+          "bbox": [
+            22,
+            51,
+            43,
+            92
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 2,
+          "nontransparent_pixels": 785,
+          "bbox": [
+            15,
+            51,
+            52,
+            92
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 3,
+          "nontransparent_pixels": 962,
+          "bbox": [
+            12,
+            50,
+            52,
+            92
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        }
+      ],
+      "ok": true,
+      "engine_revision": "40cfc31329ff"
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}

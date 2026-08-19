@@ -73,20 +73,25 @@ SP="G:/내 드라이브/wiki/projects/gamedev/pixel-sprite-workflow/sprite-gen/.
 
 ## 🧪 테스트 상태 (2026-08-19)
 
-### varco3 → 픽셀아트 end-to-end 테스트 ✅ (완료)
-- **입력**: varco3에서 "검술 전사" 판타지 캐릭터 생성 (1024×1536, 마젠타 배경)
-- **다운로드**: `test-assets/varco-fantasy/fantasy_warrior_raw.png`
-- **변환**: pixel_converter → 64×96 RGBA (`warrior_64px.png`)
-- **배경제거**: sprite-gen cutout → 투명 배경 69% (`warrior_cutout.png`)
-- **결과**: AI 이미지 → 진짜 픽셀아트 → 투명 스프라이트까지 파이프라인 검증 완료
+### varco3 → 픽셀아트 → 스프라이트시트 full end-to-end 테스트 ✅ (완료)
+- **1단계 varco3 캐릭터 생성**: 검술 전사 정면 + reference로 3방향(뒤/좌/우) 생성 (1024×1536, 마젠타 배경)
+  - 정면: `fantasy_warrior_raw.png` / 뒤·좌·우: `back_view.png` `left_view.png` `right_view.png`
+- **2단계 픽셀 변환**: 4장 → 64×96 RGBA (`*_64px.png`)
+- **3단계 배경제거**: sprite-gen cutout → 투명 배경 (`*_cutout.png`)
+- **4단계 스프라이트 스트립**: 4방향을 256×96 가로 스트립으로 합성 (`four_direction_strip.png`)
+- **5단계 extract**: `run/raw/four_dir.png` → 4개 투명 프레임 분리 (`run/frames/four_dir/frame-0~3.png`) ✅
+- **6단계 compose-atlas**: `run/four_dir_atlas.png` (256×96) + `four_dir_manifest.json` 생성 ✅
+  - manifest: 프레임 좌표(x,y,w,h), fps 4, loop, durations_ms 포함 — Unity/Godot 즉시 사용 가능
+
+**파이프라인 전 과정 검증 완료**: varco3 AI 이미지 → 진짜 픽셀아트 → 스프라이트시트 + 게임엔진 메타데이터까지.
 
 ### sprite-gen 전체 기능 테스트 ✅ (이전 세션 완료, SPRITE_GEN_FULL_TEST.md 참조)
 - cutout / extract / compose-atlas / curation 모두 동작 확인
-- manifest.json (Unity/Godot 호환 프레임 좌표+애니메이션) 생성 확인
 
 ## 📋 다음 작업 후보
 - [ ] 3D 리깅/애니메이션 경로 테스트 (Generate3D → Rig → Animate → 프레임 추출)
-- [ ] 4방향(정면/후면/좌/우) 스프라이트 생성 및 compose-atlas로 시트 합치기
+- [ ] ~~4방향 스프라이트 시트 합치기~~ ✅ (완료: four_dir_atlas.png + manifest.json)
+- [ ] Unity에 네 방향 아틀라스 실제 임포트 테스트 (Filter Mode: Point, Bottom-Center pivot)
 - [ ] 픽셀아트 웹 GUI(web_gui.py)에 sprite-gen cutout 통합 (Phase 1: 배경제거 버튼)
 
 ## 🔗 관련 위키

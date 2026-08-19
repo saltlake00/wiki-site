@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 고급 픽셀아트 변환기 GUI (Advanced Version)
+- 드래그앤드롭 지원
 - 다운스케일 방법 선택
 - 디더링 방법 선택
 - 외곽선, 대비/채도 조정
@@ -9,6 +10,7 @@
 
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox
+from tkinterdnd2 import DND_FILES, TkinterDnD
 from pathlib import Path
 import threading
 from advanced_converter import AdvancedPixelConverter
@@ -19,7 +21,7 @@ class AdvancedPixelConverterGUI:
     def __init__(self, root):
         self.root = root
         self.root.title("고급 픽셀아트 변환기")
-        self.root.geometry("900x1000")
+        self.root.geometry("900x1050")
         
         self.converter = AdvancedPixelConverter()
         self.input_path = None
@@ -37,16 +39,45 @@ class AdvancedPixelConverterGUI:
         title = ttk.Label(main_frame, text="🎨 고급 픽셀아트 변환기", font=("Arial", 20, "bold"))
         title.grid(row=0, column=0, columnspan=3, pady=10)
         
-        # === 입력/출력 파일 ===
-        ttk.Label(main_frame, text="입력 파일:", font=("Arial", 12)).grid(row=1, column=0, sticky=tk.W, pady=5)
-        self.input_label = ttk.Label(main_frame, text="파일을 선택하세요", relief=tk.SUNKEN, width=50)
-        self.input_label.grid(row=1, column=1, sticky=(tk.W, tk.E), padx=5)
-        ttk.Button(main_frame, text="찾아보기", command=self.select_input).grid(row=1, column=2, padx=5)
+        # === 드롭존 ===
+        dropzone_frame = ttk.LabelFrame(main_frame, text="📁 파일 드롭존", padding="20")
+        dropzone_frame.grid(row=1, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=10)
         
-        ttk.Label(main_frame, text="출력 경로:", font=("Arial", 12)).grid(row=2, column=0, sticky=tk.W, pady=5)
-        self.output_label = ttk.Label(main_frame, text="자동 생성", relief=tk.SUNKEN, width=50)
-        self.output_label.grid(row=2, column=1, sticky=(tk.W, tk.E), padx=5)
-        ttk.Button(main_frame, text="변경", command=self.select_output).grid(row=2, column=2, padx=5)
+        self.dropzone = tk.Label(
+            dropzone_frame,
+            text="이미지 파일을 여기에 드래그하세요\n또는 클릭하여 파일 선택",
+            font=("Arial", 12),
+            bg="#f0f0f0",
+            fg="#666",
+            relief=tk.RIDGE,
+            borderwidth=2,
+            width=60,
+            height=4,
+            cursor="hand2"
+        )
+        self.dropzone.pack(fill=tk.BOTH, expand=True)
+        
+        # 드롭존 이벤트
+        self.dropzone.drop_target_register(DND_FILES)
+        self.dropzone.dnd_bind('<<Drop>>', self.on_drop)
+        self.dropzone.bind('<Button-1>', lambda e: self.select_input())
+        
+        # 마우스 호버 효과
+        self.dropzone.bind('<Enter>', lambda e: self.dropzone.config(bg="#e8f4f8"))
+        self.dropzone.bind('<Leave>', lambda e: self.dropzone.config(bg="#f0f0f0"))
+        
+        # === 선택된 파일 표시 ===
+        file_frame = ttk.Frame(main_frame)
+        file_frame.grid(row=2, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=5)
+        
+        ttk.Label(file_frame, text="입력 파일:", font=("Arial", 10, "bold")).grid(row=0, column=0, sticky=tk.W, padx=5)
+        self.input_label = ttk.Label(file_frame, text="파일이 선택되지 않음", foreground="gray")
+        self.input_label.grid(row=0, column=1, sticky=tk.W, padx=5)
+        
+        ttk.Label(file_frame, text="출력 경로:", font=("Arial", 10, "bold")).grid(row=1, column=0, sticky=tk.W, padx=5)
+        self.output_label = ttk.Label(file_frame, text="자동 생성", foreground="gray")
+        self.output_label.grid(row=1, column=1, sticky=tk.W, padx=5)
+        ttk.Button(file_frame, text="변경", command=self.select_output, width=8).grid(row=1, column=2, padx=5)
         
         # === 기본 설정 ===
         basic_frame = ttk.LabelFrame(main_frame, text="기본 설정", padding="10")
@@ -55,6 +86,7 @@ class AdvancedPixelConverterGUI:
         ttk.Label(basic_frame, text="픽셀 너비:").grid(row=0, column=0, sticky=tk.W, pady=5)
         self.width_var = tk.IntVar(value=64)
         ttk.Spinbox(basic_frame, from_=16, to=256, textvariable=self.width_var, width=10).grid(row=0, column=1, sticky=tk.W, padx=5)
+        ttk.Label(basic_frame, text="px").grid(row=0, column=2, sticky=tk.W)
         
         ttk.Label(basic_frame, text="색상 수:").grid(row=1, column=0, sticky=tk.W, pady=5)
         self.colors_var = tk.IntVar(value=16)
@@ -117,7 +149,7 @@ class AdvancedPixelConverterGUI:
         preview_frame = ttk.LabelFrame(main_frame, text="미리보기", padding="10")
         preview_frame.grid(row=5, column=0, columnspan=3, sticky=(tk.W, tk.E, tk.N, tk.S), pady=10)
         
-        self.preview_canvas = tk.Canvas(preview_frame, width=700, height=400, bg="white")
+        self.preview_canvas = tk.Canvas(preview_frame, width=700, height=350, bg="white")
         self.preview_canvas.pack()
         
         # === 진행 상태 ===
@@ -143,6 +175,43 @@ class AdvancedPixelConverterGUI:
         main_frame.columnconfigure(1, weight=1)
         main_frame.rowconfigure(5, weight=1)
     
+    def on_drop(self, event):
+        """드래그앤드롭 이벤트 처리"""
+        # 파일 경로 파싱 (tkinterdnd2가 중괄호로 감싼 경로 반환)
+        files = self.root.tk.splitlist(event.data)
+        if files:
+            file_path = files[0].strip('{}')
+            self.load_file(file_path)
+    
+    def load_file(self, file_path):
+        """파일 로드 및 UI 업데이트"""
+        try:
+            self.input_path = Path(file_path)
+            
+            # 이미지 파일 확인
+            valid_extensions = {'.png', '.jpg', '.jpeg', '.gif', '.bmp', '.webp'}
+            if self.input_path.suffix.lower() not in valid_extensions:
+                messagebox.showerror("오류", "지원하지 않는 파일 형식입니다.\n지원 형식: PNG, JPG, GIF, BMP, WEBP")
+                return
+            
+            # UI 업데이트
+            self.input_label.config(text=self.input_path.name, foreground="black")
+            self.dropzone.config(
+                text=f"✓ {self.input_path.name}\n클릭하여 다른 파일 선택",
+                bg="#d4edda",
+                fg="#155724"
+            )
+            
+            # 출력 경로 자동 생성
+            if not self.output_path:
+                self.output_path = self.input_path.parent / f"{self.input_path.stem}_advanced_pixel.png"
+                self.output_label.config(text=self.output_path.name, foreground="black")
+            
+            self.progress_var.set(f"✓ 파일 로드 완료: {self.input_path.name}")
+            
+        except Exception as e:
+            messagebox.showerror("오류", f"파일 로드 실패:\n{e}")
+    
     def reset_settings(self):
         """설정 초기화"""
         self.width_var.set(64)
@@ -164,11 +233,7 @@ class AdvancedPixelConverterGUI:
             filetypes=[("이미지 파일", "*.png *.jpg *.jpeg *.gif *.bmp *.webp"), ("모든 파일", "*.*")]
         )
         if filename:
-            self.input_path = Path(filename)
-            self.input_label.config(text=self.input_path.name)
-            if not self.output_path:
-                self.output_path = self.input_path.parent / f"{self.input_path.stem}_advanced_pixel.png"
-                self.output_label.config(text=self.output_path.name)
+            self.load_file(filename)
     
     def select_output(self):
         filename = filedialog.asksaveasfilename(
@@ -178,7 +243,7 @@ class AdvancedPixelConverterGUI:
         )
         if filename:
             self.output_path = Path(filename)
-            self.output_label.config(text=self.output_path.name)
+            self.output_label.config(text=self.output_path.name, foreground="black")
     
     def preview(self):
         if not self.input_path:
@@ -204,7 +269,7 @@ class AdvancedPixelConverterGUI:
                 
                 self.show_preview(temp_output)
                 temp_output.unlink()
-                self.progress_var.set("미리보기 완료!")
+                self.progress_var.set("✓ 미리보기 완료!")
             except Exception as e:
                 messagebox.showerror("오류", f"미리보기 실패:\n{e}")
                 self.progress_var.set("미리보기 실패")
@@ -215,7 +280,7 @@ class AdvancedPixelConverterGUI:
     
     def show_preview(self, image_path):
         img = Image.open(image_path)
-        canvas_width, canvas_height = 700, 400
+        canvas_width, canvas_height = 700, 350
         img_ratio = img.width / img.height
         canvas_ratio = canvas_width / canvas_height
         
@@ -271,7 +336,7 @@ class AdvancedPixelConverterGUI:
 
 
 def main():
-    root = tk.Tk()
+    root = TkinterDnD.Tk()  # tkinterdnd2 사용
     app = AdvancedPixelConverterGUI(root)
     root.mainloop()
 

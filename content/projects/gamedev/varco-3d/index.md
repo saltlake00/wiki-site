@@ -63,6 +63,11 @@ varco3로 판타지 캐릭터 생성 → 픽셀아트 스프라이트 파이프�
 - **최종**: `walk_gpt2/run/walk_atlas.png`(256×96) + `walk_manifest.json`(fps 8, 4프레임, 좌표)
 - **주의(겪은 실수)**: 프롬프트에서 "left leg/right leg"로 포즈 설명 시 방향이 뒤섞임. "facing RIGHT + same direction as frame 1" 명시 필수. 방향 검증은 로컬 qwen3.5:cloud 비전.
 
+**버전 3 — 달리기 애니메이션 (gpt-image-2-medium)**:
+- 걷기와 동일 방식으로 달리기 6프레임 생성 (파생 노드, 정면 reference, gpt-image-2-medium)
+- 방향 전부 우측 + 일관된 사이클(보폭→공중→착지) qwen 검증 완료
+- **최종**: `run_gpt2/run/run_atlas.png`(384×96) + `run_manifest.json`(fps 10) + `run_animation.gif`
+
 **실행한 워크플로우** (모두 MCP로 브라우저 워크플로우 제어):
 1. `list_workflow_sessions` → workflowId `d2056c31-...` (빈 "Untitled" 워크플로우)
 2. `create_node` TextInput (프롬프트) + GenerateImage

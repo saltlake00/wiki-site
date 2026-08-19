@@ -1,0 +1,118 @@
+{
+  "ok": true,
+  "engine": "component-row",
+  "engine_revision": "40cfc31329ff",
+  "extract_args": {},
+  "run_dir": "G:\\내 드라이브\\wiki\\projects\\gamedev\\pixel-sprite-workflow\\test-assets\\varco-fantasy\\run_gpt2\\run",
+  "cell": {
+    "shape": "square",
+    "width": 64,
+    "height": 96,
+    "safe_margin_x": 4,
+    "safe_margin_y": 4,
+    "size": 96
+  },
+  "chroma_key": {
+    "name": "magenta",
+    "hex": "#FF00FF",
+    "rgb": [
+      255,
+      0,
+      255
+    ],
+    "selection": "fallback"
+  },
+  "rows": [
+    {
+      "state": "run",
+      "frames": 6,
+      "method": "components",
+      "files": [
+        "frames/run/frame-0.png",
+        "frames/run/frame-1.png",
+        "frames/run/frame-2.png",
+        "frames/run/frame-3.png",
+        "frames/run/frame-4.png",
+        "frames/run/frame-5.png"
+      ],
+      "frame_records": [
+        {
+          "index": 0,
+          "nontransparent_pixels": 1119,
+          "bbox": [
+            1,
+            45,
+            52,
+            92
+          ],
+          "edge_pixels": 2,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 1,
+          "nontransparent_pixels": 1128,
+          "bbox": [
+            0,
+            43,
+            52,
+            92
+          ],
+          "edge_pixels": 4,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 2,
+          "nontransparent_pixels": 1623,
+          "bbox": [
+            4,
+            41,
+            60,
+            92
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 3,
+          "nontransparent_pixels": 1220,
+          "bbox": [
+            11,
+            40,
+            64,
+            92
+          ],
+          "edge_pixels": 8,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 4,
+          "nontransparent_pixels": 1271,
+          "bbox": [
+            0,
+            35,
+            53,
+            92
+          ],
+          "edge_pixels": 9,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 5,
+          "nontransparent_pixels": 1392,
+          "bbox": [
+            0,
+            34,
+            51,
+            92
+          ],
+          "edge_pixels": 7,
+          "chroma_adjacent_pixels": 0
+        }
+      ],
+      "ok": true,
+      "engine_revision": "40cfc31329ff"
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}

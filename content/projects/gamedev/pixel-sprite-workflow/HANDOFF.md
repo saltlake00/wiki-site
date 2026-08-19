@@ -101,14 +101,20 @@ G:/내 드라이브/wiki/projects/gamedev/pixel-sprite-workflow/spritegen-curati
 - **최종**: `walk_gpt2/run/walk_atlas.png`(256×96) + `walk_manifest.json`(fps 8) + `walk_animation.gif`
 - **핵심 교훈**: 프레임별 노드 방식 + gpt-image-2-medium. 방향 일관성 위해 "facing RIGHT + same direction as frame 1" 명시(왼발/오른발로 설명하면 뒤섞임). 검증은 qwen3.5:cloud 비전.
 
+### 달리기 애니메이션 픽셀아트 ✅ (완료)
+- 걷기와 동일 방식, **6프레임** (달리기는 포즈 변화 커서 4보다 6이 부드러움)
+- **최종**: `run_gpt2/run/run_atlas.png`(384×96) + `run_manifest.json`(fps 10) + `run_animation.gif`
+- 방향 전부 우측 + 일관된 사이클(보폭→공중→착지) qwen 검증 완료
+
 ### sprite-gen 전체 기능 테스트 ✅ (이전 세션 완료, SPRITE_GEN_FULL_TEST.md 참조)
 - cutout / extract / compose-atlas / curation 모두 동작 확인
 
 ## 📋 다음 작업 후보
 - [ ] ~~4방향 스프라이트 시트 합치기~~ ✅ (완료: four_dir_atlas.png + manifest.json)
 - [ ] ~~걷기 애니메이션 픽셀아트~~ ✅ (완료: walk_atlas.png + walk_manifest.json)
-- [ ] 프레임 수 늘리기 (걷기 4→8프레임) 또는 다른 상태(달리기/공격) 추가
-- [ ] Unity에 걷기 아틀라스 실제 임포트 테스트 (Filter Mode: Point, Bottom-Center pivot)
+- [ ] ~~달리기 애니메이션 픽셀아트~~ ✅ (완료: run_atlas.png + run_manifest.json)
+- [ ] 다른 상태 추가 (공격/점프) 또는 걷기/달리기를 한 시트에 합치기
+- [ ] Unity에 걷기+달리기 아틀라스 실제 임포트 테스트 (Filter Mode: Point, Bottom-Center pivot)
 - [ ] 픽셀아트 웹 GUI(web_gui.py)에 sprite-gen cutout 통합 (Phase 1: 배경제거 버튼)
 
 ## 🔗 관련 위키

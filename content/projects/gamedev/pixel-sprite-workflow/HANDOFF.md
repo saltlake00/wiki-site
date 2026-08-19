@@ -56,6 +56,16 @@ SP="G:/내 드라이브/wiki/projects/gamedev/pixel-sprite-workflow/sprite-gen/.
 "$SP" -m sprite_gen.cli compose-atlas --run-dir <run-dir> --atlas sheet.png --manifest manifest.json
 ```
 
+### 5. sprite-gen curation (웹 편집기) — 배치 파일로 바로 실행 ✅
+```bash
+# 더블클릭 또는 명령줄에서 (기본 run-dir = test-assets/varco-fantasy/run):
+G:/내 드라이브/wiki/projects/gamedev/pixel-sprite-workflow/spritegen-curation.bat
+# 다른 run-dir 지정:
+...\spritegen-curation.bat <run-dir 경로>
+```
+- 배치 파일: `spritegen-curation.bat` (cp949 인코딩, Windows cmd 호환 — UTF-8로 저장하면 경로가 깨지므로 주의)
+- 실행하면 브라우저가 자동으로 열려 프레임 편집(순서/변환/미리보기) 가능
+
 ## 🔧 varco3d (3D/이미지 생성)
 
 - **서버**: `https://3d.varco.ai/api/mcp` (config.yaml `varco-3d` 항목)
@@ -85,13 +95,20 @@ SP="G:/내 드라이브/wiki/projects/gamedev/pixel-sprite-workflow/sprite-gen/.
 
 **파이프라인 전 과정 검증 완료**: varco3 AI 이미지 → 진짜 픽셀아트 → 스프라이트시트 + 게임엔진 메타데이터까지.
 
+### 걷기 애니메이션 픽셀아트 ✅ (완료, 진짜 목표)
+- 대표 정면 1장 → **4개 파생 GenerateImage 노드** (각각 gpt-image-2-medium + 정면 reference)로 걷기 4프레임 생성
+- → 픽셀 변환(64×96) → cutout → 가로 스트립 → extract → compose-atlas
+- **최종**: `walk_gpt2/run/walk_atlas.png`(256×96) + `walk_manifest.json`(fps 8) + `walk_animation.gif`
+- **핵심 교훈**: 프레임별 노드 방식 + gpt-image-2-medium. 방향 일관성 위해 "facing RIGHT + same direction as frame 1" 명시(왼발/오른발로 설명하면 뒤섞임). 검증은 qwen3.5:cloud 비전.
+
 ### sprite-gen 전체 기능 테스트 ✅ (이전 세션 완료, SPRITE_GEN_FULL_TEST.md 참조)
 - cutout / extract / compose-atlas / curation 모두 동작 확인
 
 ## 📋 다음 작업 후보
-- [ ] 3D 리깅/애니메이션 경로 테스트 (Generate3D → Rig → Animate → 프레임 추출)
 - [ ] ~~4방향 스프라이트 시트 합치기~~ ✅ (완료: four_dir_atlas.png + manifest.json)
-- [ ] Unity에 네 방향 아틀라스 실제 임포트 테스트 (Filter Mode: Point, Bottom-Center pivot)
+- [ ] ~~걷기 애니메이션 픽셀아트~~ ✅ (완료: walk_atlas.png + walk_manifest.json)
+- [ ] 프레임 수 늘리기 (걷기 4→8프레임) 또는 다른 상태(달리기/공격) 추가
+- [ ] Unity에 걷기 아틀라스 실제 임포트 테스트 (Filter Mode: Point, Bottom-Center pivot)
 - [ ] 픽셀아트 웹 GUI(web_gui.py)에 sprite-gen cutout 통합 (Phase 1: 배경제거 버튼)
 
 ## 🔗 관련 위키

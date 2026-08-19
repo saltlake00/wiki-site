@@ -1,0 +1,92 @@
+{
+  "ok": true,
+  "engine": "component-row",
+  "engine_revision": "40cfc31329ff",
+  "extract_args": {},
+  "run_dir": "G:\\내 드라이브\\wiki\\projects\\gamedev\\pixel-sprite-workflow\\test-assets\\varco-fantasy\\walk_gpt2\\run",
+  "cell": {
+    "shape": "square",
+    "width": 64,
+    "height": 96,
+    "safe_margin_x": 4,
+    "safe_margin_y": 4,
+    "size": 96
+  },
+  "chroma_key": {
+    "name": "magenta",
+    "hex": "#FF00FF",
+    "rgb": [
+      255,
+      0,
+      255
+    ],
+    "selection": "fallback"
+  },
+  "rows": [
+    {
+      "state": "walk",
+      "frames": 4,
+      "method": "components",
+      "files": [
+        "frames/walk/frame-0.png",
+        "frames/walk/frame-1.png",
+        "frames/walk/frame-2.png",
+        "frames/walk/frame-3.png"
+      ],
+      "frame_records": [
+        {
+          "index": 0,
+          "nontransparent_pixels": 1402,
+          "bbox": [
+            3,
+            32,
+            50,
+            92
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 1,
+          "nontransparent_pixels": 1228,
+          "bbox": [
+            5,
+            29,
+            49,
+            92
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 2,
+          "nontransparent_pixels": 1401,
+          "bbox": [
+            1,
+            28,
+            53,
+            92
+          ],
+          "edge_pixels": 5,
+          "chroma_adjacent_pixels": 0
+        },
+        {
+          "index": 3,
+          "nontransparent_pixels": 1143,
+          "bbox": [
+            9,
+            33,
+            44,
+            92
+          ],
+          "edge_pixels": 0,
+          "chroma_adjacent_pixels": 0
+        }
+      ],
+      "ok": true,
+      "engine_revision": "40cfc31329ff"
+    }
+  ],
+  "errors": [],
+  "warnings": []
+}

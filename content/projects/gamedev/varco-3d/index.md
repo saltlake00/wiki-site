@@ -57,6 +57,12 @@ hermes mcp add varco-3d --url https://3d.varco.ai/api/mcp --auth oauth
 
 varco3로 판타지 캐릭터 생성 → 픽셀아트 스프라이트 파이프라인 end-to-end 검증 성공.
 
+**버전 2 — 걷기 애니메이션 (gpt-image-2-medium)**:
+- 대표 정면 이미지 1장 → **4개 파생 GenerateImage 노드**로 걷기 4프레임 생성 (각각 정면 reference, gpt-image-2-medium, 3:4)
+- → 픽셀 변환(64×96) → cutout 배경제거 → 가로 스트립 → extract → compose-atlas
+- **최종**: `walk_gpt2/run/walk_atlas.png`(256×96) + `walk_manifest.json`(fps 8, 4프레임, 좌표)
+- **주의(겪은 실수)**: 프롬프트에서 "left leg/right leg"로 포즈 설명 시 방향이 뒤섞임. "facing RIGHT + same direction as frame 1" 명시 필수. 방향 검증은 로컬 qwen3.5:cloud 비전.
+
 **실행한 워크플로우** (모두 MCP로 브라우저 워크플로우 제어):
 1. `list_workflow_sessions` → workflowId `d2056c31-...` (빈 "Untitled" 워크플로우)
 2. `create_node` TextInput (프롬프트) + GenerateImage

@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "kind": "sprite-gen-request",
+  "engine": "component-row",
+  "character": {"id": "fantasy-warrior", "description": "varco3 gpt-image-2 walking cycle"},
+  "cell": {"shape":"square","width":64,"height":96,"safe_margin_x":4,"safe_margin_y":4,"size":96},
+  "chroma_key": {"name":"magenta","hex":"#FF00FF","rgb":[255,0,255],"selection":"fallback"},
+  "states": {"walk": {"frames":4,"fps":8,"loop":true,"action":"walk cycle 4 frames"}},
+  "style": "pixel art on magenta",
+  "chroma": {"mode":"rgb","unmix_reach":4,"spill_max_fraction":0.005}
+}

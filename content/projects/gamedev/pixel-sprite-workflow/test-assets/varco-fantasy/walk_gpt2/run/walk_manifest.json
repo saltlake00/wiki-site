@@ -1,0 +1,83 @@
+{
+  "characterId": "fantasy-warrior",
+  "engine": "component-row",
+  "game_input": "walk_atlas.png",
+  "degraded_static_fallback": false,
+  "curation_applied": false,
+  "frame_variant": "pixel",
+  "sprite_sheet_alpha": "walk_atlas.png",
+  "sprite_sheet_alpha_report": "sprite-sheet-alpha.report.json",
+  "base_image": null,
+  "cell": {
+    "shape": "square",
+    "width": 64,
+    "height": 96,
+    "safe_margin_x": 4,
+    "safe_margin_y": 4,
+    "size": 96
+  },
+  "chroma_key": {
+    "name": "magenta",
+    "hex": "#FF00FF",
+    "rgb": [
+      255,
+      0,
+      255
+    ],
+    "selection": "fallback"
+  },
+  "animation": {
+    "cellWidth": 64,
+    "cellHeight": 96,
+    "columns": 4,
+    "rows": {
+      "walk": {
+        "row": 0,
+        "frames": 4,
+        "fps": 8,
+        "durations_ms": [
+          125,
+          125,
+          125,
+          125
+        ],
+        "loop": true,
+        "frame_variant": "pixel"
+      }
+    }
+  },
+  "frame_layout": {
+    "sheetWidth": 256,
+    "sheetHeight": 96,
+    "cellWidth": 64,
+    "cellHeight": 96,
+    "rows": {
+      "walk": [
+        {
+          "x": 0,
+          "y": 0,
+          "w": 64,
+          "h": 96
+        },
+        {
+          "x": 64,
+          "y": 0,
+          "w": 64,
+          "h": 96
+        },
+        {
+          "x": 128,
+          "y": 0,
+          "w": 64,
+          "h": 96
+        },
+        {
+          "x": 192,
+          "y": 0,
+          "w": 64,
+          "h": 96
+        }
+      ]
+    }
+  }
+}

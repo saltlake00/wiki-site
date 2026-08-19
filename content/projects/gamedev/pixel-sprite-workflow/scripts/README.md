@@ -2,26 +2,74 @@
 
 AI 생성 이미지와 비디오를 True Pixel Art로 변환하는 Python 도구
 
-## 설치
+## 🌐 **웹 GUI** (권장 ⭐⭐⭐)
+
+브라우저 기반 픽셀아트 변환기 - 설치 없이 바로 사용!
+
+```bash
+cd scripts
+python3 web_gui.py
+```
+
+브라우저에서 **http://localhost:5000** 접속
+
+### ✨ 주요 기능
+
+- 🌐 **브라우저 기반 UI** (모든 OS 지원)
+- 🖱️ **드래그앤드롭** 업로드
+- 👁️ **실시간 미리보기** (원본 ↔ 결과 비교)
+- 🎬 **GIF 애니메이션 지원** (모든 프레임 자동 변환)
+- 💾 **즉시 다운로드**
+- ⚙️ **모든 고급 설정 지원**
+  - 8가지 다운스케일 방법
+  - 6종 프리셋 팔레트 (PICO-8, NES, Game Boy 등)
+  - Floyd-Steinberg / Ordered 디더링
+  - 대비/채도 조정
+  - CRT 스캔라인 효과
+
+### 📸 스크린샷
+
+**이미지 업로드 시 즉시 미리보기**:
+- 드롭존이 업로드한 이미지로 변경
+- 파일 정보 자동 표시 (원본 크기, 예상 출력)
+- 변환/초기화 버튼 바로 표시
+
+**변환 결과**:
+- 원본 ↔ 픽셀아트 나란히 비교
+- GIF는 애니메이션으로 재생
+- 한 번의 클릭으로 다운로드
+
+---
+
+## 📦 설치
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## 사용법
+**의존성**:
+- Pillow >= 10.0.0
+- NumPy >= 1.24.0
+- scikit-learn >= 1.3.0
+- opencv-python >= 4.8.0
+- scipy >= 1.10.0
+- flask >= 3.0.0 (웹 GUI)
 
-### GUI 버전 (권장 ⭐)
+---
+
+## 🎨 사용법
+
+### 웹 GUI (권장)
 
 ```bash
-# GUI 실행
-python pixel_converter_gui.py
+python3 web_gui.py
 ```
 
-**기능**:
-- 🖱️ 드래그앤드롭 또는 파일 선택
-- 👁️ 실시간 미리보기
-- ⚙️ 슬라이더로 간편한 설정
-- 📊 진행 상태 표시
+### 데스크톱 GUI (Tkinter)
+
+```bash
+python3 pixel_converter_gui.py
+```
 
 ### CLI 버전
 
@@ -29,111 +77,189 @@ python pixel_converter_gui.py
 
 ```bash
 # 기본 변환 (64px, 16색)
-python pixel_converter.py input.png
+python3 pixel_converter.py input.png
 
 # 사이즈와 색상 지정
-python pixel_converter.py input.png -w 32 -c 8
+python3 pixel_converter.py input.png -w 32 -c 8
 
 # PICO-8 팔레트 사용
-python pixel_converter.py input.png -p pico8
-
-# 디더링 적용
-python pixel_converter.py input.png -p pico8 -d
+python3 pixel_converter.py input.png -p pico8
 
 # 출력 경로 지정
-python pixel_converter.py input.png -o output.png -w 64 -p sweetie16
+python3 pixel_converter.py input.png -o output.png -w 64 -p sweetie16
+```
+
+#### 고급 옵션
+
+```bash
+python3 advanced_converter.py input.png \
+  -w 64 -c 16 -p pico8 \
+  --downscale pixelate \
+  --dither floyd-steinberg \
+  --outline \
+  --contrast 1.2 \
+  --crt
 ```
 
 ### 배치 변환
 
 ```bash
 # 폴더 내 모든 이미지 변환
-python batch_converter.py my_images/
-
-# 출력 폴더 지정
-python batch_converter.py my_images/ -o pixel_output/
+python3 batch_converter.py my_images/
 
 # 병렬 처리 (8개 동시)
-python batch_converter.py my_images/ -w 64 -p nes -j 8
+python3 batch_converter.py my_images/ -w 64 -p nes -j 8
 ```
 
-## 옵션
+---
 
-### 공통 옵션
+## 🎮 옵션 상세
 
-- `-w, --width`: 목표 너비 (픽셀) [기본: 64]
-- `-c, --colors`: 색상 수 [기본: 16]
-- `-p, --palette`: 프리셋 팔레트 (`pico8`, `nes`, `gameboy`, `sweetie16`)
-- `-d, --dither`: Floyd-Steinberg 디더링 적용
-- `-o, --output`: 출력 경로
+### 픽셀 너비
+출력 이미지의 **가로 픽셀 개수** (비율 유지)
+- 예: 64 = 64×? 픽셀 이미지
+- 원본 1024×768 → 64×48
 
-### 배치 전용
+### 색상 수
+사용할 색상 개수 (K-means 클러스터링)
+- 4~256색
+- 기본값: 16색
 
-- `-j, --jobs`: 병렬 처리 수 [기본: 4]
+### 팔레트
 
-## 팔레트
+| 팔레트 | 설명 | 색상 수 |
+|--------|------|---------|
+| **없음** | K-means 자동 최적화 | 사용자 지정 |
+| **PICO-8** | 레트로 판타지 콘솔 | 16색 |
+| **NES** | 닌텐도 패미컴 | 54색 |
+| **Game Boy** | 초록 모노크롬 | 4색 |
+| **Sweetie-16** | 현대 픽셀아트 | 16색 |
+| **CGA** | IBM CGA | 16색 |
 
-### PICO-8 (16색)
-레트로 판타지 콘솔 팔레트
+### 다운스케일 방법
 
-### NES (54색)
-닌텐도 패미컴 팔레트
+- **Nearest**: 가장 선명한 픽셀 경계 (권장)
+- **Pixelate**: 그리드 기반 평균 색상 (PAC 스타일)
+- **Lanczos + Nearest**: 고품질 다운 후 픽셀 스냅
 
-### Game Boy (4색)
-초록 모노크롬
+### 디더링
 
-### Sweetie-16 (16색)
-현대적 픽셀아트 팔레트
+- **Floyd-Steinberg**: 오차 확산 (부드러운 그라디언트)
+- **Ordered (Bayer)**: 패턴 기반 (빠른 처리)
+- **없음**: 디더링 없음
 
-### 비디오 → 스프라이트시트
+---
 
-```bash
-# 기본 (8 FPS, 64px, 16색)
-python video_to_spritesheet.py walk.mp4
+## 🎬 GIF 애니메이션 지원
 
-# PICO-8 스타일 + 배경 제거
-python video_to_spritesheet.py character.mp4 -fps 12 -w 64 -p pico8 --remove-bg
+웹 GUI는 **모든 프레임을 자동으로 변환**합니다:
 
-# 고해상도, 8x3 그리드
-python video_to_spritesheet.py attack.mp4 -fps 10 -w 128 -c 32 --columns 8
-
-# NES 팔레트 + 디더링, 최대 24프레임
-python video_to_spritesheet.py jump.mp4 -p nes -d --max-frames 24
+```
+원본 GIF (10프레임, 512×512)
+    ↓
+각 프레임을 픽셀아트로 변환
+    ↓
+결과 GIF (10프레임, 64×64, 16색)
 ```
 
-## 예제
+**특징**:
+- ✅ 프레임 속도 유지 (duration)
+- ✅ 무한 루프 유지
+- ✅ 실시간 진행 상태 표시
+- ✅ 애니메이션 미리보기
 
-```bash
-# GPT 이미지 → 64x64 PICO-8 스타일
-python pixel_converter.py character.png -w 64 -p pico8 -d
+---
 
-# 폴더 일괄 변환 (32px, Game Boy 스타일)
-python batch_converter.py sprites/ -w 32 -p gameboy -j 8
+## 🎯 추천 프리셋
 
-# AI 비디오 → 픽셀 스프라이트시트 (자동 배경 제거)
-python video_to_spritesheet.py walk_animation.mp4 -fps 8 -w 64 -p pico8 --remove-bg
+### 레트로 게임 (PICO-8)
+```
+픽셀 너비: 64px
+색상 수: 16
+팔레트: PICO-8
+디더링: Floyd-Steinberg
 ```
 
-## Unity 통합
+### 만화/애니메이션
+```
+픽셀 너비: 128px
+색상 수: 32
+팔레트: 없음
+외곽선: 체크
+대비: 1.2
+```
 
-변환된 이미지를 Unity에 임포트할 때:
+### Game Boy 스타일
+```
+픽셀 너비: 64px
+팔레트: Game Boy
+디더링: Ordered
+CRT: 체크
+```
+
+---
+
+## 🔧 Unity 통합
+
+변환된 이미지를 Unity에서 사용할 때:
 
 ```
 Inspector 설정:
-- Texture Type: Sprite (2D and UI)
-- Filter Mode: Point (no filter) ← 필수!
-- Compression: None
-- Sprite Mode: Single 또는 Multiple
+✓ Texture Type: Sprite (2D and UI)
+✓ Filter Mode: Point (no filter) ← 필수!
+✓ Compression: None
+✓ Max Size: 원본 크기 유지
 ```
 
-## 📦 프로젝트 구조
+---
+
+## 🚀 고급 기능 (sprite-gen 통합)
+
+게임 개발자를 위한 추가 기능이 준비되어 있습니다:
+
+- 🧹 **배경 제거** (자동 크로마 키)
+- 📐 **백본 격자** (진짜 픽셀아트 스냅)
+- 📋 **스프라이트시트 + manifest.json** (Unity/Godot 호환)
+- 🎨 **팔레트 스왑** (색상 변형)
+
+자세한 내용: `SPRITE_GEN_FULL_TEST.md` 참조
+
+---
+
+## 📁 프로젝트 구조
 
 ```
 scripts/
-├── pixel_converter_gui.py    # ⭐ GUI 버전 (권장)
+├── web_gui.py                # ⭐⭐⭐ 웹 GUI (권장)
+├── templates/
+│   └── index.html            # 웹 UI
+├── pixel_converter_gui.py    # 데스크톱 GUI (Tkinter)
 ├── pixel_converter.py         # CLI 단일 변환
 ├── batch_converter.py         # CLI 배치 변환
+├── advanced_converter.py     # 핵심 변환 엔진
 ├── video_to_spritesheet.py   # 비디오 → 스프라이트시트
 ├── requirements.txt           # 의존성
-└── README.md                  # 이 파일
+├── README.md                  # 이 파일
+└── WEB_GUIDE.md              # 웹 GUI 상세 가이드
 ```
+
+---
+
+## 📝 라이선스
+
+MIT License
+
+---
+
+## 🙏 감사
+
+- 픽셀아트 팔레트: [Lospec](https://lospec.com/palette-list)
+- 크로마 키 알고리즘: [sprite-gen](https://github.com/aldegad/sprite-gen) (Apache-2.0)
+
+---
+
+## 📚 추가 문서
+
+- `WEB_GUIDE.md` - 웹 GUI 사용 가이드
+- `SPRITE_GEN_INTEGRATION.md` - sprite-gen 통합 가이드
+- `SPRITE_GEN_FULL_TEST.md` - sprite-gen 전체 기능 테스트

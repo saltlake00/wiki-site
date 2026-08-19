@@ -248,6 +248,17 @@ class AdvancedPixelConverter:
         print(f"📂 로드: {input_path}")
         img = Image.open(input_path)
         
+        # GIF 애니메이션 처리
+        if getattr(img, 'is_animated', False):
+            print(f"🎬 애니메이션 GIF 감지: {img.n_frames} 프레임")
+            return self._convert_animated_gif(
+                img, output_path, width, colors, palette,
+                downscale_method, dither_method, add_outline,
+                outline_color, outline_thickness, smooth,
+                enhance_contrast, enhance_saturation, crt_effect
+            )
+        
+        # 단일 이미지 처리
         if img.mode != 'RGBA':
             img = img.convert('RGBA')
         
@@ -300,6 +311,79 @@ class AdvancedPixelConverter:
         print(f"✅ 완료!")
         
         return img
+    
+    def _convert_animated_gif(self, img, output_path, width, colors, palette,
+                             downscale_method, dither_method, add_outline,
+                             outline_color, outline_thickness, smooth,
+                             enhance_contrast, enhance_saturation, crt_effect):
+        """애니메이션 GIF 변환"""
+        frames = []
+        durations = []
+        
+        for frame_num in range(img.n_frames):
+            img.seek(frame_num)
+            print(f"  프레임 {frame_num + 1}/{img.n_frames}")
+            
+            # 프레임 복사
+            frame = img.convert('RGBA')
+            
+            # 1. 전처리
+            if enhance_contrast != 1.0:
+                frame = self.enhance_contrast(frame, enhance_contrast)
+            if enhance_saturation != 1.0:
+                frame = self.enhance_saturation(frame, enhance_saturation)
+            
+            # 2. 다운스케일
+            frame = self.downscale_with_method(frame, width, downscale_method)
+            
+            # 3. 스무딩
+            if smooth > 0:
+                frame = self.smooth_colors(frame, smooth)
+            
+            # 4. 색상 양자화
+            if palette:
+                palette_colors = self.predefined_palettes.get(palette, palette)
+                if dither_method == 'floyd-steinberg':
+                    frame = self.floyd_steinberg_dither(frame, palette_colors)
+                elif dither_method == 'ordered':
+                    frame = self.ordered_dither(frame, palette_colors, matrix_size=4)
+                else:
+                    frame = self.apply_palette(frame, palette_colors)
+            else:
+                frame = self.quantize_colors_kmeans(frame, colors)
+            
+            # 5. 외곽선
+            if add_outline:
+                frame = self.add_outline(frame, outline_color, outline_thickness)
+            
+            # 6. CRT 효과
+            if crt_effect:
+                frame = self.apply_CRT_effect(frame)
+            
+            # RGB로 변환 (GIF는 RGBA 지원 안함)
+            frame = frame.convert('RGB')
+            frames.append(frame)
+            
+            # 프레임 지속 시간 (밀리초)
+            try:
+                duration = img.info.get('duration', 100)
+            except:
+                duration = 100
+            durations.append(duration)
+        
+        # GIF로 저장
+        print(f"💾 저장: {output_path}")
+        frames[0].save(
+            output_path,
+            save_all=True,
+            append_images=frames[1:],
+            duration=durations,
+            loop=img.info.get('loop', 0),
+            optimize=False
+        )
+        print(f"✅ 완료!")
+        
+        return frames[0]  # 첫 프레임 반환 (미리보기용)
     
     # 기본 메서드 (기존 코드와 호환)
     def quantize_colors_kmeans(self, img, num_colors):

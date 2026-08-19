@@ -9,6 +9,8 @@
 
 <div class="card" data-href="projects/gamedev/pixel-sprite-workflow/" data-img="" data-icon="🎨" data-title="🎮 도트 스프라이트 제작" data-sub="" data-badge="" data-desc=""></div>
 
+<div class="card" data-href="projects/gamedev/varco-3d/" data-img="" data-icon="🧊" data-title="🧊 VARCO 3D 캐릭터 생성" data-sub="" data-badge="" data-desc=""></div>
+
 <div class="card" data-href="projects/unity/링스택/" data-img="assets/cards/ring-stack.svg" data-icon="⚙️" data-title="링 스택" data-sub="Ring Stack" data-badge="Unity · 게임" data-desc="스택 장르의 타이밍 탭 + 정렬 판정을 회전으로 재구성한 Unity 게임. 720슬롯 AND 판정, 절차적 메시, NPR 셰이더."></div>
 
 <div class="card" data-href="llm/사용로그" data-img="assets/cards/llm-usage.svg" data-icon="📝" data-title="LLM 사용로그" data-sub="Usage Log" data-badge="사용 기록" data-desc="날짜별 LLM 사용 기록. 무엇을 했고 뭘 배웠는지 append-only로 쌓음."></div>

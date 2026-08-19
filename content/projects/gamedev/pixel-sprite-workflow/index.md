@@ -2,7 +2,7 @@
 title: AI 이미지 → 도트 스프라이트 워크플로우
 description: Unity 2D 플랫포머용 도트 감성 스프라이트 제작 파이프라인
 created: 2026-08-18
-updated: 2026-08-18
+updated: 2026-08-19
 tags:
   - gamedev
   - unity
@@ -475,9 +475,11 @@ ditheredCanvas = await pixelate({
 ### 특징
 - ✅ 완전 오프라인 동작
 - ✅ 배치 처리 (폴더 일괄 변환)
+- ✅ **웹 GUI** (브라우저 기반) 🆕
+- ✅ **GIF 애니메이션 전체 프레임 변환** 🆕
 - ✅ **비디오 → 스프라이트시트 자동 변환** 🆕
-- ✅ 4가지 프리셋 팔레트 (PICO-8, NES, Game Boy, Sweetie-16)
-- ✅ Floyd-Steinberg 디더링
+- ✅ 6가지 프리셋 팔레트 (PICO-8, NES, Game Boy, Sweetie-16, CGA)
+- ✅ Floyd-Steinberg / Ordered 디더링
 - ✅ k-means 색상 축소
 - ✅ 병렬 처리 지원
 - ✅ 자동 배경 제거
@@ -488,6 +490,28 @@ ditheredCanvas = await pixelate({
 cd scripts/
 pip install -r requirements.txt
 ```
+
+### 🚀 웹 GUI (권장 ⭐⭐⭐)
+
+```bash
+cd scripts/
+python3 web_gui.py
+```
+브라우저에서 **http://localhost:5000** 접속
+
+- 🖱️ 드래그앤드롭 업로드
+- 👁️ 실시간 원본↔결과 비교
+- 🎬 GIF 애니메이션 전체 변환
+- 💾 즉시 다운로드
+- 상세 가이드: `WEB_GUIDE.md`
+
+### 게임 에셋 고급 기능 (sprite-gen 통합)
+
+검증 완료된 [sprite-gen](https://github.com/aldegad/sprite-gen) (Apache-2.0) 파이프라인:
+- 🧹 배경 제거 (자동 크로마 키)
+- 📐 백본 격자 (진짜 픽셀아트 스냅)
+- 📋 스프라이트시트 + `manifest.json` (Unity/Godot 호환)
+- 자세한 내용: `SPRITE_GEN_FULL_TEST.md`
 
 ### 사용법
 

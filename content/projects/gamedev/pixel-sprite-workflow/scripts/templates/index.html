@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 픽셀아트 변환기</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 0;
+        }
+
+        .sidebar {
+            background: #f8f9fa;
+            padding: 30px;
+            border-right: 1px solid #e0e0e0;
+            overflow-y: auto;
+            max-height: calc(100vh - 200px);
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        .control-group label {
+            display: block;
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 5px;
+        }
+
+        .help-text {
+            font-size: 11px;
+            color: #999;
+            margin-top: 3px;
+            font-style: italic;
+        }
+
+        .image-info {
+            background: #e8f5e9;
+            border: 1px solid #a5d6a7;
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 12px;
+            color: #2e7d32;
+        }
+
+        .image-info strong {
+            color: #1b5e20;
+        }
+
+        .image-preview {
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .image-preview img {
+            width: 100%;
+            max-height: 200px;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 2px solid #ddd;
+            background: 
+                repeating-conic-gradient(#eee 0% 25%, white 0% 50%) 
+                50% / 20px 20px;
+            display: none;
+        }
+
+        .control-group input[type="number"],
+        .control-group input[type="range"],
+        .control-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .control-group input[type="range"] {
+            padding: 0;
+        }
+
+        .range-value {
+            display: inline-block;
+            margin-left: 10px;
+            font-weight: bold;
+            color: #4a90e2;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            font-size: 13px;
+            color: #555;
+            cursor: pointer;
+        }
+
+        .viewer {
+            padding: 30px;
+        }
+
+        #dropzone {
+            border: 3px dashed #4a90e2;
+            border-radius: 12px;
+            padding: 60px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            background: #f0f8ff;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #dropzone.dragover {
+            background: #e3f2fd;
+            border-color: #2196F3;
+            transform: scale(1.02);
+        }
+
+        #dropzone.has-image {
+            padding: 0;
+            border: 2px solid #5cb85c;
+            background: transparent;
+            height: 300px;
+        }
+
+        #dropzone .icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        #dropzone .text {
+            font-size: 16px;
+            color: #666;
+        }
+
+        #dropzone .subtext {
+            font-size: 12px;
+            color: #999;
+            margin-top: 8px;
+        }
+
+        #dropzone img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+            background: 
+                repeating-conic-gradient(#eee 0% 25%, white 0% 50%) 
+                50% / 20px 20px;
+        }
+
+        #dropzone.has-image img {
+            display: block;
+        }
+
+        #dropzone.has-image .placeholder {
+            display: none;
+        }
+
+        .placeholder {
+            display: block;
+        }
+
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .image-box {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .image-box h3 {
+            font-size: 14px;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            image-rendering: pixelated;
+            background: 
+                repeating-conic-gradient(#eee 0% 25%, white 0% 50%) 
+                50% / 20px 20px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #5cb85c;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #4cae4c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(92, 184, 92, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f0ad4e;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #ec971f;
+            transform: translateY(-2px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        #status {
+            padding: 12px;
+            background: #333;
+            color: white;
+            text-align: center;
+            font-size: 13px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        #status.loading {
+            background: #4a90e2;
+            animation: pulse 1.5s infinite;
+        }
+
+        #status.success {
+            background: #5cb85c;
+        }
+
+        #status.error {
+            background: #d9534f;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        #downloadBtn {
+            background: #4a90e2;
+            color: white;
+        }
+
+        #downloadBtn:hover {
+            background: #357abd;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎨 픽셀아트 변환기</h1>
+            <p>AI 이미지를 레트로 픽셀아트로 변환</p>
+        </div>
+
+        <div class="main-content">
+            <!-- 사이드바: 설정 -->
+            <div class="sidebar">
+                <div class="section">
+                    <div class="section-title">⚙️ 기본 설정</div>
+                    
+                    <div class="control-group">
+                        <label>픽셀 너비 (출력 가로 픽셀 개수)</label>
+                        <input type="number" id="width" min="16" max="256" value="64">
+                        <div class="help-text">예: 64 = 64×? 픽셀 이미지 (비율 유지)</div>
+                    </div>
+
+                    <div class="control-group">
+                        <label>색상 수</label>
+                        <input type="number" id="colors" min="4" max="256" value="16">
+                    </div>
+
+                    <div class="control-group">
+                        <label>팔레트</label>
+                        <select id="palette">
+                            <option value="none">없음 (K-means)</option>
+                            <option value="pico8">PICO-8 (16색)</option>
+                            <option value="nes">NES (54색)</option>
+                            <option value="gameboy">Game Boy (4색)</option>
+                            <option value="sweetie16">Sweetie-16 (16색)</option>
+                            <option value="cga">CGA (16색)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <div class="section-title">🔧 고급 설정</div>
+                    
+                    <div class="control-group">
+                        <label>다운스케일 방법</label>
+                        <select id="downscale">
+                            <option value="nearest">Nearest (가장 선명)</option>
+                            <option value="pixelate">Pixelate (그리드 평균)</option>
+                            <option value="lanczos_then_nearest">Lanczos + Nearest</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label>디더링</label>
+                        <select id="dither">
+                            <option value="floyd-steinberg">Floyd-Steinberg</option>
+                            <option value="ordered">Ordered (Bayer)</option>
+                            <option value="none">없음</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label>대비 <span class="range-value" id="contrast-value">1.0</span></label>
+                        <input type="range" id="contrast" min="0.5" max="2.0" step="0.1" value="1.0">
+                    </div>
+
+                    <div class="control-group">
+                        <label>채도 <span class="range-value" id="saturation-value">1.0</span></label>
+                        <input type="range" id="saturation" min="0.5" max="2.0" step="0.1" value="1.0">
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="outline">
+                        <label for="outline">외곽선 추가</label>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="crt">
+                        <label for="crt">CRT 스캔라인 효과</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 메인 뷰어 -->
+            <div class="viewer">
+                <div id="dropzone">
+                    <div class="placeholder">
+                        <div class="icon">📁</div>
+                        <div class="text">이미지를 드래그하거나 클릭하여 선택</div>
+                        <div class="subtext">PNG, JPG, GIF, BMP, WebP 지원 (최대 16MB)</div>
+                    </div>
+                    <img id="dropzoneImg" alt="업로드된 이미지">
+                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                </div>
+
+                <!-- 이미지 정보 -->
+                <div id="imageInfo" class="image-info hidden">
+                    <div><strong>파일명:</strong> <span id="infoFilename"></span></div>
+                    <div><strong>원본 크기:</strong> <span id="infoSize"></span></div>
+                    <div><strong>예상 출력:</strong> <span id="infoOutput"></span></div>
+                </div>
+
+                <!-- 버튼 그룹 -->
+                <div id="actionButtons" class="button-group hidden">
+                    <button class="btn btn-primary" id="convertBtn">✨ 변환</button>
+                    <button class="btn btn-secondary" id="resetBtn">🔄 초기화</button>
+                </div>
+
+                <div id="status" class="hidden">준비</div>
+
+                <button class="btn hidden" id="downloadBtn">💾 다운로드</button>
+
+                <div id="comparison" class="comparison hidden">
+                    <div class="image-box">
+                        <h3>📷 원본</h3>
+                        <img id="originalImg" alt="원본">
+                    </div>
+                    <div class="image-box">
+                        <h3>✨ 픽셀아트</h3>
+                        <img id="resultImg" alt="변환 결과">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const dropzone = document.getElementById('dropzone');
+        const dropzoneImg = document.getElementById('dropzoneImg');
+        const fileInput = document.getElementById('fileInput');
+        const convertBtn = document.getElementById('convertBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const status = document.getElementById('status');
+        const comparison = document.getElementById('comparison');
+        const originalImg = document.getElementById('originalImg');
+        const resultImg = document.getElementById('resultImg');
+        const imageInfo = document.getElementById('imageInfo');
+        const actionButtons = document.getElementById('actionButtons');
+        const infoFilename = document.getElementById('infoFilename');
+        const infoSize = document.getElementById('infoSize');
+        const infoOutput = document.getElementById('infoOutput');
+
+        // 슬라이더 값 표시
+        document.getElementById('contrast').addEventListener('input', (e) => {
+            document.getElementById('contrast-value').textContent = e.target.value;
+        });
+        document.getElementById('saturation').addEventListener('input', (e) => {
+            document.getElementById('saturation-value').textContent = e.target.value;
+        });
+
+        // 픽셀 너비 변경 시 예상 출력 업데이트
+        document.getElementById('width').addEventListener('input', () => {
+            if (selectedFile && dropzoneImg.complete && dropzoneImg.naturalWidth > 0) {
+                const targetWidth = parseInt(document.getElementById('width').value);
+                const targetHeight = Math.round(dropzoneImg.naturalHeight * targetWidth / dropzoneImg.naturalWidth);
+                infoOutput.textContent = `${targetWidth} × ${targetHeight} px`;
+            }
+        });
+
+        let selectedFile = null;
+        let downloadUrl = null;
+
+        // 드래그앤드롭
+        dropzone.addEventListener('click', () => fileInput.click());
+        
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('dragover');
+        });
+
+        dropzone.addEventListener('dragleave', () => {
+            dropzone.classList.remove('dragover');
+        });
+
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFile(e.target.files[0]);
+            }
+        });
+
+        function handleFile(file) {
+            if (!file.type.startsWith('image/')) {
+                showStatus('이미지 파일만 지원합니다', 'error');
+                return;
+            }
+
+            selectedFile = file;
+            
+            // 이미지 미리보기 표시 (드롭존에)
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                dropzoneImg.src = e.target.result;
+                dropzone.classList.add('has-image');
+                
+                // 이미지 크기 확인
+                dropzoneImg.onload = () => {
+                    const width = dropzoneImg.naturalWidth;
+                    const height = dropzoneImg.naturalHeight;
+                    const targetWidth = parseInt(document.getElementById('width').value);
+                    const targetHeight = Math.round(height * targetWidth / width);
+                    
+                    infoFilename.textContent = file.name;
+                    infoSize.textContent = `${width} × ${height} px (${(file.size / 1024).toFixed(1)} KB)`;
+                    infoOutput.textContent = `${targetWidth} × ${targetHeight} px`;
+                    
+                    // 정보와 버튼 표시
+                    imageInfo.classList.remove('hidden');
+                    actionButtons.classList.remove('hidden');
+                };
+            };
+            reader.readAsDataURL(file);
+            
+            showStatus(`파일 선택 완료: ${file.name}`, 'success');
+        }
+
+        // 변환
+        convertBtn.addEventListener('click', async () => {
+            if (!selectedFile) return;
+
+            showStatus('변환 중...', 'loading');
+            downloadBtn.classList.add('hidden');
+            comparison.classList.add('hidden');
+
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+            formData.append('width', document.getElementById('width').value);
+            formData.append('colors', document.getElementById('colors').value);
+            formData.append('palette', document.getElementById('palette').value);
+            formData.append('downscale', document.getElementById('downscale').value);
+            formData.append('dither', document.getElementById('dither').value);
+            formData.append('outline', document.getElementById('outline').checked);
+            formData.append('contrast', document.getElementById('contrast').value);
+            formData.append('saturation', document.getElementById('saturation').value);
+            formData.append('crt', document.getElementById('crt').checked);
+
+            try {
+                const response = await fetch('/convert', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const data = await response.json();
+
+                if (data.error) {
+                    showStatus(`오류: ${data.error}`, 'error');
+                    return;
+                }
+
+                // 이미지 표시
+                originalImg.src = data.original;
+                
+                // GIF 애니메이션이면 URL로, 아니면 base64로
+                if (data.is_animated) {
+                    resultImg.src = data.result;  // URL
+                } else {
+                    resultImg.src = data.result;  // base64
+                }
+                
+                downloadUrl = data.download_url;
+
+                comparison.classList.remove('hidden');
+                downloadBtn.classList.remove('hidden');
+                
+                if (data.is_animated) {
+                    showStatus('✅ 애니메이션 GIF 변환 완료!', 'success');
+                } else {
+                    showStatus('✅ 변환 완료!', 'success');
+                }
+
+            } catch (error) {
+                showStatus(`오류: ${error.message}`, 'error');
+            }
+        });
+
+        // 다운로드
+        downloadBtn.addEventListener('click', () => {
+            if (downloadUrl) {
+                window.location.href = downloadUrl;
+            }
+        });
+
+        // 초기화
+        resetBtn.addEventListener('click', () => {
+            // 설정 초기화
+            document.getElementById('width').value = 64;
+            document.getElementById('colors').value = 16;
+            document.getElementById('palette').value = 'none';
+            document.getElementById('downscale').value = 'nearest';
+            document.getElementById('dither').value = 'floyd-steinberg';
+            document.getElementById('outline').checked = false;
+            document.getElementById('crt').checked = false;
+            document.getElementById('contrast').value = 1.0;
+            document.getElementById('saturation').value = 1.0;
+            document.getElementById('contrast-value').textContent = '1.0';
+            document.getElementById('saturation-value').textContent = '1.0';
+            
+            // UI 초기화
+            selectedFile = null;
+            dropzone.classList.remove('has-image');
+            dropzoneImg.src = '';
+            imageInfo.classList.add('hidden');
+            actionButtons.classList.add('hidden');
+            comparison.classList.add('hidden');
+            downloadBtn.classList.add('hidden');
+            
+            showStatus('설정 초기화 완료', 'success');
+            setTimeout(() => status.classList.add('hidden'), 2000);
+        });
+
+        function showStatus(message, type = 'info') {
+            status.textContent = message;
+            status.classList.remove('hidden', 'loading', 'success', 'error');
+            if (type !== 'info') {
+                status.classList.add(type);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,3 +1,14 @@
+---
+title: AI 비디오 → 픽셀 스프라이트 워크플로우
+created: 2026-08-18
+updated: 2026-08-20
+type: guide
+status: active
+tags: [개발, 도구]
+sources:
+  - projects/gamedev/pixel-sprite-workflow/index.md
+---
+
 # AI 비디오 → 픽셀 스프라이트 워크플로우
 
 ComfyUI/Stable Video Diffusion으로 이미지에서 애니메이션 비디오 생성 → 픽셀 스프라이트시트 변환

@@ -9,6 +9,10 @@
 
 <div class="card" data-href="projects/gamedev/pixel-sprite-workflow/" data-img="" data-icon="🎨" data-title="🎮 도트 스프라이트 제작" data-sub="" data-badge="" data-desc=""></div>
 
+<div class="card" data-href="projects/gamedev/unity-2d-platformer/" data-img="" data-icon="🕹️" data-title="🎮 Unity 2D 플랫포머" data-sub="" data-badge="" data-desc=""></div>
+
+<div class="card" data-href="projects/gamedev/unity-gamedev-prompt-template/" data-img="" data-icon="📋" data-title="📋 Unity 게임개발 클로드 프롬프트" data-sub="" data-badge="" data-desc=""></div>
+
 <div class="card" data-href="projects/gamedev/varco-3d/" data-img="" data-icon="🧊" data-title="🧊 VARCO 3D 캐릭터 생성" data-sub="" data-badge="" data-desc=""></div>
 
 <div class="card" data-href="projects/unity/링스택/" data-img="assets/cards/ring-stack.svg" data-icon="⚙️" data-title="링 스택" data-sub="Ring Stack" data-badge="Unity · 게임" data-desc="스택 장르의 타이밍 탭 + 정렬 판정을 회전으로 재구성한 Unity 게임. 720슬롯 AND 판정, 절차적 메시, NPR 셰이더."></div>

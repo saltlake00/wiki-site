@@ -2,7 +2,7 @@
 title: 픽셀아트 스프라이트 파이프라인 - 세션 핸드오프
 description: 새 세션 시작 시 이 파일부터 읽고 바로 작업을 재개하기 위한 진입점
 created: 2026-08-19
-updated: 2026-08-19
+updated: 2026-08-20
 type: guide
 status: active
 tags:
@@ -27,8 +27,8 @@ sources:
 |------|------|
 | **프로젝트 루트** | `G:\내 드라이브\wiki\projects\gamedev\pixel-sprite-workflow\` |
 | **스크립트** | `<루트>\scripts\` (pixel_converter.py, batch_converter.py, advanced_converter.py, web_gui.py 등) |
-| **sprite-gen 도구** | `<루트>\sprite-gen\` (타사 오픈소스 파이프라인) |
-| **sprite-gen venv** | `<루트>\sprite-gen\.venv\Scripts\python.exe` |
+| **sprite-gen 도구** | `C:\Users\KGA01\Documents\위키-참고자료\sprite-gen\` (타사 오픈소스, 2026-08-20 위키 밖으로 이동 — .git/.venv를 위키 git 저장소에 넣지 않기 위함) |
+| **sprite-gen venv** | `C:\Users\KGA01\Documents\위키-참고자료\sprite-gen\.venv\Scripts\python.exe` |
 | **테스트 산출물** | `<루트>\test-assets\` |
 | **위키 본문** | `<루트>\index.md` (24360자 상세 파이프라인 문서) |
 
@@ -42,7 +42,7 @@ python3 pixel_converter.py <input.png> -o <output.png> -w 64 -c 16
 
 ### 2. sprite-gen 배경 제거 (cutout)
 ```bash
-SP="G:/내 드라이브/wiki/projects/gamedev/pixel-sprite-workflow/sprite-gen/.venv/Scripts/python"
+SP="C:/Users/KGA01/Documents/위키-참고자료/sprite-gen/.venv/Scripts/python"
 "$SP" -m sprite_gen.cli cutout <input.png> --key auto --out <output.png>
 ```
 
@@ -118,5 +118,5 @@ G:/내 드라이브/wiki/projects/gamedev/pixel-sprite-workflow/spritegen-curati
 - [ ] 픽셀아트 웹 GUI(web_gui.py)에 sprite-gen cutout 통합 (Phase 1: 배경제거 버튼)
 
 ## 🔗 관련 위키
-- [[픽셀아트 스프라이트 워크플로우]] — 상세 파이프라인 문서 (index.md)
-- [[sprite-gen 통합 가이드]] — SPRITE_GEN_INTEGRATION.md
+- [[projects/gamedev/pixel-sprite-workflow/index|픽셀아트 스프라이트 워크플로우]] — 상세 파이프라인 문서 (index.md)
+- [[projects/gamedev/pixel-sprite-workflow/SPRITE_GEN_INTEGRATION|sprite-gen 통합 가이드]] — SPRITE_GEN_INTEGRATION.md

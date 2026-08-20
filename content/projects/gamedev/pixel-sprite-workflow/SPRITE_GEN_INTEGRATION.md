@@ -1,8 +1,19 @@
+---
+title: sprite-gen 통합 가이드
+created: 2026-08-19
+updated: 2026-08-20
+type: guide
+status: active
+tags: [개발, 도구]
+sources:
+  - projects/gamedev/pixel-sprite-workflow/index.md
+---
+
 # sprite-gen 통합 테스트 결과
 
 ## ✅ 설치 완료
 
-**위치**: `G:\내 드라이브\wiki\projects\gamedev\pixel-sprite-workflow\sprite-gen`
+**위치**: `C:\Users\KGA01\Documents\위키-참고자료\sprite-gen` (2026-08-20부터 — 이전엔 위키 폴더 안에 있었으나 외부 git clone+venv라서 위키 git 저장소 밖으로 이동)
 
 **설치된 것**:
 - sprite-gen 1.59.0

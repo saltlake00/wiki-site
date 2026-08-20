@@ -2,7 +2,10 @@
 title: AI 이미지 → 도트 스프라이트 워크플로우
 description: Unity 2D 플랫포머용 도트 감성 스프라이트 제작 파이프라인
 created: 2026-08-18
-updated: 2026-08-19
+updated: 2026-08-20
+type: guide
+status: active
+sources: []
 tags:
   - gamedev
   - unity

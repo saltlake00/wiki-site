@@ -1,4 +1,17 @@
+---
+title: sprite-gen 전체 기능 테스트
+created: 2026-08-19
+updated: 2026-08-20
+type: query
+status: active
+tags: [개발, 도구]
+sources:
+  - projects/gamedev/pixel-sprite-workflow/index.md
+---
+
 # sprite-gen 전체 기능 테스트 결과
+
+> sprite-gen 설치 위치는 2026-08-20부터 `C:\Users\KGA01\Documents\위키-참고자료\sprite-gen` (위키 밖). 아래 명령어의 `.venv/Scripts/python`은 그 경로 기준.
 
 ## ✅ 테스트 완료된 기능
 

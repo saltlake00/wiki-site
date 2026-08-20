@@ -1,3 +1,14 @@
+---
+title: 픽셀아트 변환기 웹 GUI 가이드
+created: 2026-08-18
+updated: 2026-08-20
+type: guide
+status: active
+tags: [개발, 도구]
+sources:
+  - projects/gamedev/pixel-sprite-workflow/scripts/README.md
+---
+
 # 픽셀아트 변환기 웹 GUI 빠른 시작
 
 ## 🚀 실행 방법

@@ -1,3 +1,14 @@
+---
+title: 픽셀아트 변환기 스크립트 가이드
+created: 2026-08-18
+updated: 2026-08-20
+type: guide
+status: active
+tags: [개발, 도구]
+sources:
+  - projects/gamedev/pixel-sprite-workflow/index.md
+---
+
 # 픽셀아트 변환기 (Pixel Art Converter)
 
 AI 생성 이미지와 비디오를 True Pixel Art로 변환하는 Python 도구

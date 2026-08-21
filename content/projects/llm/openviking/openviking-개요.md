@@ -1,7 +1,7 @@
 ---
 title: OpenViking 개요
 created: 2026-08-19
-updated: 2026-08-19
+updated: 2026-08-21
 type: entity
 status: active
 tags: [AI/ML, 도구, 개발]
@@ -9,6 +9,11 @@ sources: []
 ---
 
 # OpenViking 개요
+
+> **판단**: Hermes 공식 파트너이고 LoCoMo 개선폭(33% → 83%)이 크다. 다만 이 PC에서는
+> Windows Store Python 문제로 **uv venv 우회가 필요**했고, 로컬 올라마 구성에 모델 ~5GB가 든다.
+> 라이선스가 **AGPLv3**(메인)라는 점도 쓰기 전에 고려할 것.
+> **다음**: [[projects/llm/openviking/HANDOFF|HANDOFF]]의 테스트 상태를 보고 이어서 검증한다.
 
 > AI 에이전트용 **컨텍스트 데이터베이스**. ByteDance(volcengine)가 만든 오픈소스.
 > 에이전트의 메모리·리소스·스킬을 하나의 가상 파일시스템(`viking://`)으로 관리한다.
@@ -40,7 +45,13 @@ sources: []
 
 - **설치**: `uv venv ~/.openviking-venv --python 3.12` + `uv pip install --python ~/.openviking-venv/Scripts/python.exe openviking`
   - ⚠️ Windows Store Python(MSIX)은 pip 경로 문제로 설치 실패 → **uv venv로 우회**
-  - ⚠️ venv 경로가 `/c/c/Users/...`로 꼬일 수 있음 → 실제 Windows 경로 `C:/c/Users/KGA01/.openviking-venv/Scripts`로 접근
+  - ⚠️ **venv가 실제로 `C:/c/Users/KGA01/.openviking-venv`에 만들어졌다.** Git Bash에서 `~`가
+    `/c/Users/...`로 풀린 채 Windows 도구에 넘어가 드라이브 뒤에 `c/Users/...`가 덧붙은 결과다.
+    **오타가 아니라 실제 경로다** — 2026-08-21 원본 PC에서 확인:
+    `C:/c/Users/KGA01/.openviking-venv/Scripts/`에 `openviking-server.exe`·`ov.exe`가 있고
+    `C:/Users/KGA01/.openviking-venv`는 **없다**. (2026-08-21 1차 점검에서 "오기로 보임"이라고
+    표시했던 것을 정정한다 — 다른 PC라 검증을 못 한 상태의 추측이었다)
+  - 재설치할 일이 생기면 `~` 대신 **절대경로**를 주고, 그때 `C:/c/` 트리를 정리한다
 - **실행 파일**: `C:/c/Users/KGA01/.openviking-venv/Scripts/openviking-server.exe`, `ov.exe`
 - **설정**: `openviking-server init` → 로컬 올라마 기반 선택
   - embedding `qwen3-embedding:0.6b` + VLM `qwen3.5:4b` + query planner (총 ~5GB)

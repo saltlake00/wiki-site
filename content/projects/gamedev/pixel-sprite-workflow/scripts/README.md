@@ -1,7 +1,7 @@
 ---
 title: 픽셀아트 변환기 스크립트 가이드
 created: 2026-08-18
-updated: 2026-08-20
+updated: 2026-08-21
 type: guide
 status: active
 tags: [개발, 도구]
@@ -256,6 +256,62 @@ scripts/
 
 ---
 
+## 🔬 처리 파이프라인 (내부 순서)
+
+**이미지 변환**:
+```python
+class PixelArtConverter:
+    def convert(img, width, colors, palette, dither):
+        # 1. Nearest Neighbor 리사이즈
+        img = resize_nearest_neighbor(img, width)
+        
+        # 2-A. 팔레트 매핑 (프리셋 사용 시)
+        if palette:
+            img = apply_palette(img, palette_colors)
+        
+        # 2-B. k-means 색상 축소 (자동)
+        else:
+            img = quantize_colors_kmeans(img, colors)
+        
+        # 3. 디더링 (선택)
+        if dither:
+            img = floyd_steinberg_dither(img, palette)
+        
+        return img
+```
+
+**비디오 → 스프라이트시트** 🆕:
+```python
+class VideoToSpriteSheet:
+    def convert(video, fps, width, palette):
+        # 1. 프레임 추출 (FPS 조절)
+        frames = extract_frames(video, target_fps=fps)
+        
+        # 2. 배경 제거 (선택)
+        if remove_bg:
+            frames = remove_background(frames)
+        
+        # 3. 프레임 정규화 (동일 크기, bottom-center 정렬)
+        frames = normalize_frame_size(frames, anchor='bottom-center')
+        
+        # 4. 각 프레임 픽셀아트 변환
+        pixel_frames = [
+            pixel_converter.convert(f, width, palette)
+            for f in frames
+        ]
+        
+        # 5. 스프라이트시트 생성 (그리드 배열)
+        sprite_sheet = create_sprite_sheet(pixel_frames, columns)
+        
+        return sprite_sheet
+```
+
+> 이 의사코드는 2026-08-21 허브 페이지 분할 때 유일하게 갈 곳이 없던 부분이라 여기로 옮겼다.
+> **실제 구현은 `pixel_converter.py` / `video_to_spritesheet.py`가 원천**이고, 이건 코드를
+> 열지 않고 순서만 확인하려는 용도다. 구현이 바뀌면 여기도 같이 고친다.
+
+---
+
 ## 📝 라이선스
 
 MIT License
@@ -271,6 +327,8 @@ MIT License
 
 ## 📚 추가 문서
 
-- `WEB_GUIDE.md` - 웹 GUI 사용 가이드
-- `SPRITE_GEN_INTEGRATION.md` - sprite-gen 통합 가이드
-- `SPRITE_GEN_FULL_TEST.md` - sprite-gen 전체 기능 테스트
+- [[projects/gamedev/pixel-sprite-workflow/scripts/WEB_GUIDE|웹 GUI 가이드]] — 브라우저 변환기 사용법
+- [[projects/gamedev/pixel-sprite-workflow/scripts/ADVANCED|고급 기능 가이드]] — 다운스케일·디더링·외곽선 세부 옵션
+- [[projects/gamedev/pixel-sprite-workflow/SPRITE_GEN_INTEGRATION|sprite-gen 통합 가이드]]
+- [[projects/gamedev/pixel-sprite-workflow/SPRITE_GEN_FULL_TEST|sprite-gen 전체 기능 테스트]]
+- [[projects/gamedev/pixel-sprite-workflow/index|워크플로우 허브]] — 이 도구를 파이프라인 어디에서 쓰는지

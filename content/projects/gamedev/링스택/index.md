@@ -5,15 +5,21 @@ card_sub: Ring Stack
 card_badge: Unity · 게임
 card_desc: 스택 장르의 타이밍 탭 + 정렬 판정을 회전으로 재구성한 Unity 게임. 720슬롯 AND 판정, 절차적 메시, NPR 셰이더.
 card_img: assets/cards/ring-stack.svg
-card_link: projects/unity/링스택/
-type: project
+card_link: projects/gamedev/링스택/
+type: entity
 tags: [개발, 게임, Unity]
+sources: []
 created: 2026-08-18
-updated: 2026-08-18
+updated: 2026-08-21
 status: active
 ---
 
 # 링 스택 (Ring Stack)
+
+> **판단**: 스택 장르의 재미를 유지하면서 실패가 실루엣을 망치지 않게 하려고 회전으로 재구성했다.
+> 안은 이빨이 깎이고 겉은 항상 원기둥 — **판정과 실루엣의 분리**가 이 프로젝트의 축이다.
+> **다음**: 없음 — status를 stable로 내릴 후보. 27층 입력 잠김 버그 내역은 회수 완료
+> ([[링스택-게임]] "알려진 버그와 수정"). 원인은 특정되지 않았고 방어 수정만 들어가 있다.
 
 > **스택(Stack) 장르의 핵심 재미 — 타이밍 탭 + 정렬 판정 — 을 회전으로 재구성한 Unity 게임.**
 

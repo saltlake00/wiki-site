@@ -5,11 +5,7 @@ created: 2026-08-19
 updated: 2026-08-20
 type: guide
 status: active
-tags:
-  - gamedev
-  - pixel-art
-  - sprite
-  - workflow
+tags: [개발, 게임, 도구]
 sources:
   - projects/gamedev/pixel-sprite-workflow/index.md
 ---

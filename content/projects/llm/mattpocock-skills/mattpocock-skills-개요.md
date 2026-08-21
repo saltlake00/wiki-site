@@ -1,7 +1,7 @@
 ---
 title: mattpocock/skills 개요
 created: 2026-08-19
-updated: 2026-08-19
+updated: 2026-08-21
 type: entity
 status: active
 tags: [AI/ML, 도구, 개발]
@@ -9,6 +9,9 @@ sources: [https://github.com/mattpocock/skills]
 ---
 
 # mattpocock/skills 개요
+
+> **판단**: "작고 조합 가능하고 제어권을 뺏지 않는 스킬" 철학이 우리 쪽 기준과 일치한다. 도구로 도입하기보다 **스킬 작성 방식의 참고 기준**으로 쓴다.
+> **다음**: 스킬을 새로 쓸 때 이 저장소의 구조와 대조한다.
 
 > **실전 엔지니어용 AI 에이전트 스킬 모음**. Matt Pocock이 매일 쓰는 스킬.
 > "vibe coding이 아닌 실제 엔지니어링"을 위한 스킬.

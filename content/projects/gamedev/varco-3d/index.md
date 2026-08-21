@@ -2,16 +2,11 @@
 title: VARCO 3D MCP
 description: VARCO 3D 브라우저 워크플로우를 MCP로 제어 — AI 캐릭터/3D 이미지 생성
 created: 2026-08-19
-updated: 2026-08-19
+updated: 2026-08-21
 type: entity
 status: active
-tags:
-  - gamedev
-  - unity
-  - ai-tools
-  - mcp
-  - workflow
-  - image-generation
+sources: []
+tags: [개발, 게임, Unity, AI/ML, 도구]
 card_title: 🧊 VARCO 3D 캐릭터 생성
 card_description: VARCO 3D MCP로 브라우저 워크플로우에서 AI 캐릭터 생성
 card_icon: 🧊
@@ -19,6 +14,9 @@ card_color: "#3B82F6"
 ---
 
 # VARCO 3D MCP
+
+> **판단**: **브라우저에 워크플로우가 열려 있어야만 동작한다** — 이게 이 도구의 가장 큰 제약이고, 도구 호출이 실패했을 때 재시도보다 **먼저 확인할 것**이다. OAuth는 MCP 클라이언트에 맡기고 토큰을 수동으로 다루지 않는다. MCP 도구는 새 세션에서만 로드된다.
+> **다음**: 생성한 에셋을 픽셀 스프라이트 워크플로우로 넘기는 경로를 실제로 한 번 통과시킨다.
 
 VARCO 3D는 **브라우저 기반 3D/이미지 생성 도구**로, 사용자가 브라우저에 띄워둔 커스텀 워크플로우를 **MCP(remote)로 에이전트가 제어**할 수 있게 한다. 판타지 캐릭터 이미지 생성 등에 사용.
 
@@ -86,9 +84,7 @@ varco3로 판타지 캐릭터 생성 → 픽셀아트 스프라이트 파이프�
 
 ## 관련
 
-- [[pixel-sprite-workflow]] — 생성된 캐릭터를 픽셀아트로 후처리
+- [[projects/gamedev/varco-3d/parts-from-image|🧩 VARCO 3D 부품 분리 워크플로우 템플릿]] — 하나의 이미지를 8개 부품으로 분리해 각각 3D 생성 (재사용 템플릿, 2026-08-21 기록)
+- [[projects/gamedev/pixel-sprite-workflow/index|AI 이미지 → 도트 스프라이트 워크플로우]] — 생성된 캐릭터를 픽셀아트로 후처리
 - [[링스택-게임]] — Unity 게임 (캐릭터 에셋에 사용 예정)
 
-## 배포
-
-`python sync_wiki.py` 실행 → 홈 카드 자동 생성 + content 복사 + git push + GitHub Pages 재배포

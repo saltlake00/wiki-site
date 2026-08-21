@@ -1,15 +1,18 @@
 ---
 title: 링스택 vs 원본스택
 created: 2026-08-18
-updated: 2026-08-18
+updated: 2026-08-21
 status: active
 type: comparison
 tags: [개발, 게임, 비교]
-sources: [raw/projects/unity/링스택/링스택-게임-README.md]
+sources: [raw/projects/gamedev/링스택/링스택-게임-README.md]
 confidence: high
 ---
 
 # 링스택 vs 원본스택
+
+> **판단**: 차별점은 한 줄로 요약된다 — **반지름이 불변이라 실패해도 실루엣이 원기둥으로 남는다.** 이게 이 프로젝트의 존재 이유고, 다른 차이(회전, 리빌 연출)는 여기서 파생된다.
+> **다음**: 없음.
 
 링 스택 게임이 원본 Stack 게임과 어떻게 다른지 비교.
 

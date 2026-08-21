@@ -1,7 +1,7 @@
 ---
 title: TencentDB-Agent-Memory 개요
 created: 2026-08-19
-updated: 2026-08-19
+updated: 2026-08-21
 type: entity
 status: active
 tags: [AI/ML, 도구, 개발]
@@ -9,6 +9,9 @@ sources: [https://github.com/TencentCloud/TencentDB-Agent-Memory]
 ---
 
 # TencentDB-Agent-Memory 개요
+
+> **판단**: 우리 위키와 **같은 LLM-Wiki 개념을 팀 단위로 확장**한 것. 개인용에는 팀 기능이 과하므로 **도입하지 않고**, 자산 분리 방식(Chat Memory / Skill / Code-Graph)만 참고한다.
+> **다음**: 없음 — 참고용. 위키 구조를 손볼 때 다시 열어본다.
 
 > **팀 단위 AI 에이전트 메모리 허브**. 대화, 문서, 코드를 4가지 재사용 가능한 메모리 자산으로 변환.
 > 우리 위키의 LLM-Wiki 개념과 정확히 일치하는 프로젝트.

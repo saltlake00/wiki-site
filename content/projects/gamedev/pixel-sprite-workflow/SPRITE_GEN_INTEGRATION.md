@@ -1,7 +1,7 @@
 ---
 title: sprite-gen 통합 가이드
 created: 2026-08-19
-updated: 2026-08-20
+updated: 2026-08-21
 type: guide
 status: active
 tags: [개발, 도구]
@@ -10,6 +10,9 @@ sources:
 ---
 
 # sprite-gen 통합 테스트 결과
+
+> **판단**: 전체 통합이 아니라 **cutout(배경 제거)만 즉시 통합할 가치가 있다.** 스프라이트시트/픽셀 스냅은 중기, 팔레트 스왑·호흡 효과는 선택. 성능·기능 전부를 가져오려 하면 비용이 이득을 넘는다.
+> **다음**: Phase 1 — `web_gui.py`에 cutout 통합 + sprite-gen 실행 경로 설정. (sprite-gen은 원본 PC의 위키 밖 경로에 있다 — `GUIDE.md` 외부 스크립트 표 참고)
 
 ## ✅ 설치 완료
 

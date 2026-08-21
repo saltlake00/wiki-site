@@ -1,7 +1,7 @@
 ---
 title: OmniRoute 개요
 created: 2026-08-19
-updated: 2026-08-19
+updated: 2026-08-21
 type: entity
 status: active
 tags: [AI/ML, 도구, 개발]
@@ -9,6 +9,9 @@ sources: [https://github.com/diegosouzapw/OmniRoute]
 ---
 
 # OmniRoute 개요
+
+> **판단**: 무료 티어 집계 + 제로 설정이 장점이고 설치·기동·`auto` chat completion까지는 검증됐다. 다만 `models list`가 비어 있고 로컬 ollama / Claude OAuth 연동이 미완이라 **아직 상시 경로로 쓸 단계는 아니다.**
+> **다음**: provider 설정을 채워 `models list`를 살린다. Claude OAuth 연동을 할지 말지 결정한다.
 
 > **무료 AI 게이트웨이**. 하나의 엔드포인트로 340+ provider(90+ 무료), 1200+ 모델을 라우팅.
 > Claude Code, Codex, Cursor, OpenCode, Cline, Copilot 등과 호환.

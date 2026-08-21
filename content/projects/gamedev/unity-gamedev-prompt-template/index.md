@@ -2,16 +2,11 @@
 title: Unity 게임개발용 클로드 시작 프롬프트 템플릿
 description: 어떤 Unity 게임이든 재사용 가능한 범용 시작 프롬프트 — 프로젝트 확정 제약(URP, New Input System, VARCO 분리) 포함
 created: 2026-08-20
-updated: 2026-08-20
+updated: 2026-08-21
 type: guide
 status: active
-tags:
-  - gamedev
-  - unity
-  - prompt
-  - workflow
-  - claude-code
-  - template
+sources: []
+tags: [개발, 게임, Unity, 프롬프트, 도구]
 card_title: 📋 Unity 게임개발 클로드 프롬프트
 card_description: 어떤 게임이든 그대로 쓰는 범용 시작 프롬프트
 card_icon: 📋
@@ -19,6 +14,9 @@ card_color: "#F59E0B"
 ---
 
 # Unity 게임개발용 클로드 시작 프롬프트 템플릿
+
+> **판단**: 이 계정 Unity 프로젝트의 **확정 제약을 프롬프트에 미리 박아두는 것**이 이 템플릿의 요점이다 (URP/Lit, New Input System 전용, InputSystemUIInputModule). 이걸 빼면 매번 같은 함정 — 마젠타 머티리얼, UI 클릭 무반응 — 에 다시 빠진다.
+> **다음**: 새 게임을 시작할 때 이 템플릿으로 시작하고, **새로 겪은 함정은 `[사전 확인]` 절에 추가**한다.
 
 어떤 Unity 게임이든 그대로 쓸 수 있는 **범용 시작 프롬프트**. `GameBootstrap` 코드 생성 방식, VARCO 3D 연동, 이 계정 Unity 프로젝트의 확정 제약을 미리 박아뒀다.
 
@@ -57,7 +55,7 @@ Unity에서 [게임 이름]를 만들어줘.
 - 반복 생성 개체는 프리팹 또는 생성 함수 한 곳만 고치면 전부 바뀌는 구조로. id → prefab 매핑을 한 곳에서 관리해서 모델이 0개여도 프리미티브 폴백으로 끝까지 플레이 가능하게 해줘.
 
 ## [확장성]
-{{ 추가할 기능 + 원하는 스크립트 목록. 예: 경험치·레벨업·새 무기·보스·멀티샷. PlayerController, Enemy, EnemySpawner, AutoAttack, Projectile, Health, GameManager, GameUI 등 기능별 스크립트로 나눠 확장하기 쉽게 구성해줘.}
+{{ 추가할 기능 + 원하는 스크립트 목록. 예: 경험치·레벨업·새 무기·보스·멀티샷. PlayerController, Enemy, EnemySpawner, AutoAttack, Projectile, Health, GameManager, GameUI 등 기능별 스크립트로 나눠 확장하기 쉽게 구성해줘. }}
 
 ## [제약]
 최종적으로 Unity WebGL 빌드 후 itch.io에 올릴 예정이야. Web에서 문제없는 기본 Unity 기능 위주로 구현하고, 새 패키지는 추가하지 마.
@@ -74,5 +72,6 @@ Unity에서 [게임 이름]를 만들어줘.
 
 ## 관련
 
-- [[varco-3d]] — VARCO 3D MCP 활용
-- [[unity-2d-platformer]] — Unity 2D 플랫포머 학습
+- [[projects/gamedev/varco-3d/index|VARCO 3D MCP]] — VARCO 3D MCP 활용
+- [[projects/gamedev/unity-2d-platformer/index|Unity 2D 플랫포머]] — Unity 2D 플랫포머 학습
+- [[projects/gamedev/ncai-varco-lecture/index|NC AI·VARCO 강의 노트 (1차시)]] — 이 템플릿의 제약과 실습 맥락이 나온 수업

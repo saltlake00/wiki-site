@@ -1,10 +1,10 @@
 ---
 title: OpenViking HANDOFF
 created: 2026-08-19
-updated: 2026-08-19
+updated: 2026-08-21
 type: guide
 status: active
-tags: [LLM, 개발, 도구]
+tags: [AI/ML, 개발, 도구]
 sources:
   - projects/llm/openviking/openviking-개요.md
 ---
@@ -15,6 +15,9 @@ sources:
 > 상세 내용은 [[openviking-개요]] 참고.
 
 ## 핵심 경로
+
+> `C:/c/Users/...`는 **오타가 아니다.** venv가 실제로 그 위치에 만들어졌다
+> (2026-08-21 원본 PC에서 확인). 배경은 [[openviking-개요]] "설치 & 설정" 참고.
 
 | 항목 | 경로 |
 |------|------|

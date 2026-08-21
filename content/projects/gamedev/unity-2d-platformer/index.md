@@ -2,14 +2,11 @@
 title: Unity 2D 플랫포머 - 타일맵, 스프라이트 애니메이션, 시네머신
 description: 2D 플랫포머 제작에서 스프라이트 애니메이션, 정렬, 타일맵(룰/애니메이션 타일, 브러쉬), 시네머신 카메라, 콜라이더, 조작감 기능 정리
 created: 2026-08-19
-updated: 2026-08-19
-tags:
-  - gamedev
-  - unity
-  - 2d
-  - platformer
-  - tilemap
-  - cinemachine
+updated: 2026-08-21
+type: note
+status: active
+sources: []
+tags: [개발, 게임, Unity, 2D, 타일맵]
 card_title: 🎮 Unity 2D 플랫포머
 card_description: 타일맵·스프라이트 애니메이션·시네머신
 card_icon: 🕹️
@@ -17,6 +14,8 @@ card_color: "#22C55E"
 ---
 
 # Unity 2D 플랫포머 - 타일맵, 스프라이트 애니메이션, 시네머신
+
+> **판단**: 3D와의 근본 차이는 **트랜스폼이 아니라 스프라이트 교체로 애니메이션을 만든다**는 점이고, 타일맵·정렬·시네머신은 그 위에 얹히는 구성이다. 실무 변수는 Pixel Per Unit과 정렬 순서에 몰려 있다.
 
 2D 플랫포머를 만들면서 배운 내용 정리. 스프라이트 애니메이션부터 타일맵, 시네머신 카메라, 조작감 기능까지.
 
@@ -103,3 +102,10 @@ Rigidbody의 포지션/회전을 아예 못 움직이게 막는 기능.
 - MCP 연결하면 커밋 메시지에 **수정 내역**이 나옵니다. 보고 나중에 다시 돌아갈 수 있습니다.
 - 이전 맵으로 돌아가고 싶으면 커밋으로 되돌립니다.
 - 라이선스: 표준 라이선스 따라서 쓰고, 원작자 표시.
+
+## 관련
+
+- [[projects/gamedev/pixel-sprite-workflow/index|AI 이미지 → 도트 스프라이트 워크플로우]] — 여기 쓰는 2D 스프라이트를 만드는 파이프라인
+- [[projects/gamedev/varco-3d/index|VARCO 3D MCP]] — 캐릭터/에셋 생성
+- [[2D-타일맵]] — 타일맵 관련 별도 정리
+

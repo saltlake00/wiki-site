@@ -3,33 +3,37 @@
 > 개인 지식 베이스. 손에 쥔 카드처럼 펼쳐진 카드를 탐색해보세요.
 > **호버** = 살짝 올라옴 · **클릭 1번** = 확대 + 마우스 따라 기울임 · **클릭 2번** = 페이지 이동
 
-<svg width="0" height="0" style="position:absolute; display:none;" aria-hidden="true">
-  <defs>
-    <g id="corner-knot" fill="none" stroke="currentColor" stroke-width="1.6">
-      <rect x="10" y="1" width="10" height="28" rx="5"/>
-      <rect x="1" y="10" width="28" height="10" rx="5"/>
-      <path d="M7 15h16M15 7v16"/>
-    </g>
-  </defs>
-</svg>
-
 <div class="deck-wrap">
 <div class="deck">
 
-<div class="card" data-href="projects/" data-icon="📁" data-title="모든 프로젝트" data-sub="ALL PROJECTS" data-badge="도메인 허브" data-desc="전체 위키 도메인 및 지식 구조 한눈에 탐색" data-accent="#e8c96d"></div>
+<div class="card" data-href="projects/" data-type="all" data-title="모든 프로젝트" data-sub="ALL PROJECTS" data-badge="도메인 허브" data-label="문서 수" data-value="220+ 페이지" data-accent="#E8C96D"></div>
 
-<div class="card" data-href="projects/gamedev/pixel-sprite-workflow/" data-icon="🎨" data-title="도트 스프라이트" data-sub="PIXEL WORKFLOW" data-badge="AI · 파이프라인" data-desc="AI 이미지 생성부터 Unity 애니메이션 시트까지" data-accent="#08b67c"></div>
+<div class="card" data-href="projects/gamedev/pixel-sprite-workflow/" data-type="pixel" data-title="도트 스프라이트" data-sub="PIXEL PIPELINE" data-badge="AI · 파이프라인" data-label="워크플로우" data-value="5단계 변환" data-accent="#299E4C"></div>
 
-<div class="card" data-href="projects/gamedev/링스택/" data-icon="⚙️" data-title="링 스택" data-sub="RING STACK" data-badge="Unity · 3D 게임" data-desc="타이밍 회전 판정과 절차적 메시의 3D 스택 게임" data-accent="#399ce6"></div>
+<div class="card" data-href="projects/gamedev/링스택/" data-type="unity" data-title="링 스택" data-sub="RING STACK 3D" data-badge="Unity · 3D" data-label="판정 시스템" data-value="720 슬롯 AND" data-accent="#297BD4"></div>
 
-<div class="card" data-href="llm/사용로그" data-icon="📝" data-title="LLM 사용로그" data-sub="USAGE LOG" data-badge="기록 · 회고" data-desc="날짜별 AI 협업 기록과 통찰 누적 일지" data-accent="#9254e5"></div>
+<div class="card" data-href="llm/사용로그" data-type="log" data-title="LLM 사용로그" data-sub="USAGE LOG" data-badge="기록 · 회고" data-label="누적 방식" data-value="Append Only" data-accent="#9254E5"></div>
 
-<div class="card" data-href="llm/프롬프트-패턴" data-icon="💡" data-title="프롬프트 패턴" data-sub="PROMPT PATTERNS" data-badge="기법 · 라이브러리" data-desc="실전 검증된 고품질 AI 프롬프트 설계 모음" data-accent="#ef681b"></div>
+<div class="card" data-href="llm/프롬프트-패턴" data-type="prompt" data-title="프롬프트 패턴" data-sub="PROMPT PATTERNS" data-badge="실전 기법" data-label="설계 규격" data-value="검증된 템플릿" data-accent="#EF681B"></div>
 
 </div>
 </div>
 
 <style>
+
+/* treeclick UI 레이아웃 토큰 정의 (Tokens.dc.html 규격) */
+:root {
+  --tc-surface-detail: #161616;
+  --tc-surface-panel: #161D21;
+  --tc-text-primary: #F2F4F4;
+  --tc-text-secondary: #899094;
+  --tc-text-tertiary: #6E767B;
+  --tc-action-btn: #1A6046;
+  --tc-action-btn-hover: #08B67C;
+  --tc-badge-bg: #23282C;
+  --tc-badge-text: #A8AFB3;
+  --tc-divider: #262B2F;
+}
 
 .deck-wrap {
   position: relative;
@@ -50,26 +54,26 @@
   align-items: center;
   min-height: 440px;
   width: 100%;
-  max-width: 1080px;
+  max-width: 1100px;
   margin: 0 auto;
 }
 
 .card {
-  --accent: #e8c96d;
+  --accent: #E8C96D;
   --rot-z: 0deg;
   --rot-y: 0deg;
   --trans-y: 0px;
   --trans-x: 0px;
   position: relative;
-  width: 184px;
-  height: 316px;
+  width: 192px;
+  height: 326px;
   cursor: pointer;
   border-radius: 22px;
-  background: radial-gradient(circle at 50% 18%, #1c2127 0%, #13171a 65%, #0b0d0f 100%);
-  border: 1px solid var(--accent);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.8),
-              0 0 14px color-mix(in srgb, var(--accent) 45%, transparent),
-              0 0 35px color-mix(in srgb, var(--accent) 15%, transparent);
+  background: radial-gradient(120% 80% at 50% 20%, #1D293D 0%, #161D21 60%, var(--tc-surface-detail) 100%);
+  border: 1.5px solid var(--accent);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 55%, transparent),
+              0 0 26px color-mix(in srgb, var(--accent) 25%, transparent),
+              0 14px 34px rgba(0,0,0,0.85);
   transform-origin: 50% 125%;
   transform: translateX(var(--trans-x)) translateY(var(--trans-y)) rotateZ(var(--rot-z)) rotateY(var(--rot-y));
   transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.3, 1),
@@ -83,163 +87,151 @@
   box-sizing: border-box;
 }
 
-/* 1px 마비노기 이중 프레임 */
+/* 1px 인셋 보조 테두리선 (상세창 집중 프레임) */
 .card::before {
   content: '';
   position: absolute;
   inset: 6px;
-  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
   border-radius: 16px;
   pointer-events: none;
   z-index: 1;
 }
 
-/* 네 모서리 룬 매듭 오너먼트 */
-.card-knot {
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  color: var(--accent);
-  pointer-events: none;
-  z-index: 2;
-  opacity: 0.85;
-}
-.card-knot.tl { top: 6px; left: 6px; }
-.card-knot.tr { top: 6px; right: 6px; }
-.card-knot.bl { bottom: 6px; left: 6px; }
-.card-knot.br { bottom: 6px; right: 6px; }
-
 /* 카드 내부 컨텐츠 */
 .card-inner {
   position: relative;
-  z-index: 3;
+  z-index: 2;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 12px 16px;
+  padding: 16px 12px 14px;
   text-align: center;
   box-sizing: border-box;
 }
 
-/* 상단 칩 배지 */
-.card-chip-wrap {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  min-height: 24px;
-}
+/* 상단 알약형 칩 배지 (Tokens.dc.html 규격) */
 .card-chip {
   display: inline-block;
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 2px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
   border-radius: 999px;
-  background: rgba(11, 15, 18, 0.8);
-  color: var(--accent);
-  border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
-  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 25%, transparent);
+  background: var(--tc-badge-bg);
+  color: var(--tc-badge-text);
+  letter-spacing: 0.02em;
 }
 
-/* 중앙 아이콘 및 발광 */
+/* 중앙 아이콘 프레임 (DexDetail.dc.html 규격: #0D0D0D 바탕 + 1.5px 테두리) */
 .card-icon-frame {
-  position: relative;
   width: 68px;
   height: 68px;
+  border-radius: 18px;
+  background: #0D0D0D;
+  border: 1.5px solid var(--accent);
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 2px 0;
+  box-shadow: inset 0 0 12px rgba(0,0,0,0.8);
 }
-.card-icon-glow {
-  position: absolute;
-  inset: -12px;
-  border-radius: 50%;
-  background: radial-gradient(circle, color-mix(in srgb, var(--accent) 35%, transparent) 0%, transparent 70%);
-  pointer-events: none;
-}
-.card-icon {
-  font-size: 2.3rem;
-  line-height: 1;
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.8));
-  position: relative;
-  z-index: 1;
+.card-icon-frame svg {
+  width: 34px;
+  height: 34px;
+  stroke: var(--accent);
 }
 
-/* 제목 영역 (말줄임 없이 자연스러운 표시) */
+/* 제목 영역 (Tokens.dc.html 타이포 규격: 굵기 700 + 고유 액센트 색상) */
 .card-title-wrap {
-  margin: 2px 0;
   width: 100%;
+  margin: 2px 0;
 }
 .card-title {
-  font-size: 1.02rem;
+  font-size: 16px;
   font-weight: 700;
-  color: #f4f6f8;
-  line-height: 1.35;
-  margin-bottom: 3px;
+  color: var(--accent);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
   word-break: keep-all;
   white-space: normal;
-  text-shadow: 0 2px 5px rgba(0,0,0,0.9);
 }
 .card-sub {
-  font-size: 0.64rem;
-  letter-spacing: 0.08em;
-  color: #899094;
+  font-size: 10px;
+  color: var(--tc-text-secondary);
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  margin-top: 3px;
 }
 
-/* 1px 수평 분할선 */
+/* 1px 수평 분할선 (Tokens.dc.html 규격) */
 .card-divider {
-  width: 78%;
+  width: 88%;
   height: 1px;
-  background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 45%, transparent), transparent);
-  margin: 4px 0;
+  background: var(--tc-divider);
+  margin: 2px 0;
 }
 
-/* 설명문 */
-.card-desc {
-  font-size: 0.69rem;
-  line-height: 1.45;
-  color: #a0acae;
-  padding: 0 4px;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  word-break: keep-all;
+/* 스펙 행 (DexDetail.dc.html 규격: 라벨과 고정폭 수치 분할) */
+.card-spec-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  width: 88%;
+  font-size: 11px;
+  margin: 1px 0;
+}
+.card-spec-label {
+  color: var(--tc-text-secondary);
+}
+.card-spec-value {
+  color: var(--tc-text-primary);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 
-/* 하단 액션 힌트 */
-.card-action-hint {
-  font-size: 0.66rem;
-  color: var(--accent);
-  font-weight: 600;
-  opacity: 0.8;
-  margin-top: 2px;
+/* 하단 주 행동 버튼 (Tokens.dc.html action.primary-onSurface 규격: #1A6046) */
+.card-action-btn {
+  width: 88%;
+  padding: 7px 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--tc-action-btn);
+  color: #EAF7F1;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.2s ease;
+}
+.card:hover .card-action-btn {
+  background: var(--tc-action-btn-hover);
 }
 
-/* 호버 상태 (살짝 부유 + 네온 발광 증폭) */
+/* 호버 상태 */
 .card:hover {
-  transform: translateX(var(--trans-x)) translateY(calc(var(--trans-y) - 26px)) translateZ(70px) rotateZ(var(--rot-z)) rotateY(var(--rot-y)) scale(1.08);
-  box-shadow: 0 20px 45px rgba(0,0,0,0.85),
-              0 0 20px var(--accent),
-              0 0 50px color-mix(in srgb, var(--accent) 35%, transparent);
+  transform: translateX(var(--trans-x)) translateY(calc(var(--trans-y) - 24px)) translateZ(70px) rotateZ(var(--rot-z)) rotateY(var(--rot-y)) scale(1.08);
+  box-shadow: 0 0 14px var(--accent),
+              0 0 38px color-mix(in srgb, var(--accent) 45%, transparent),
+              0 22px 48px rgba(0,0,0,0.9);
   z-index: 80 !important;
 }
 
-/* 클릭 선택 상태 (중앙 확대 + 정면 정렬) */
+/* 클릭 선택 상태 */
 .card.selected {
   transform: translateX(0) translateY(-14px) translateZ(140px) rotateZ(0deg) rotateY(0deg) scale(1.36) !important;
-  box-shadow: 0 30px 60px rgba(0,0,0,0.95),
-              0 0 30px var(--accent),
-              0 0 70px color-mix(in srgb, var(--accent) 50%, transparent) !important;
+  box-shadow: 0 0 20px var(--accent),
+              0 0 50px color-mix(in srgb, var(--accent) 55%, transparent),
+              0 30px 60px rgba(0,0,0,0.95) !important;
   z-index: 120 !important;
   transition: transform 0.45s cubic-bezier(0.18, 1.2, 0.28, 1), box-shadow 0.45s ease;
 }
 
-/* 선택 시 배경 카드 부드러운 디밍 */
+/* 선택 시 배경 디밍 */
 .deck:has(.card.selected) .card:not(.selected) {
   opacity: 0.3;
   filter: grayscale(0.5) brightness(0.5);
@@ -255,7 +247,16 @@
   var selectedCard = null;
   var lastSelectTime = 0;
 
-  // 완벽한 대칭 각도 및 곡률 수식 계산
+  // 스트로크 기반 인라인 SVG 아이콘 맵 (이모지 배제 규칙 준수)
+  var iconSvgMap = {
+    all: '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>',
+    pixel: '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".6" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".6" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".6" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".6" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.437-1.125-.29-.289-.438-.652-.438-1.125a1.64 1.64 0 0 1 1.668-1.668h1.996c3.051 0 5.555-2.503 5.555-5.554C21.965 6.012 17.461 2 12 2z"/></svg>',
+    unity: '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="4"/></svg>',
+    log: '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>',
+    prompt: '<svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 22h4M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5z"/></svg>'
+  };
+
+  // 수학적 대칭 각도 및 Y축 곡률 계산
   function updateCardFan() {
     var cards = Array.from(document.querySelectorAll('.deck .card'));
     var count = cards.length;
@@ -279,35 +280,36 @@
     });
   }
 
-  // 카드 돔 빌드 (마비노기 모바일 UI 구조 생성)
+  // 카드 돔 빌드 (treeclick UI 시스템 적용)
   function buildCard(card) {
-    var icon = card.getAttribute('data-icon') || '📁';
+    var type = card.getAttribute('data-type') || 'all';
     var title = card.getAttribute('data-title') || '';
     var sub = card.getAttribute('data-sub') || '';
     var badge = card.getAttribute('data-badge') || '';
-    var desc = card.getAttribute('data-desc') || '';
-    var accent = card.getAttribute('data-accent') || '#e8c96d';
+    var label = card.getAttribute('data-label') || '';
+    var value = card.getAttribute('data-value') || '';
+    var accent = card.getAttribute('data-accent') || '#E8C96D';
 
     card.style.setProperty('--accent', accent);
 
+    var iconSvg = iconSvgMap[type] || iconSvgMap['all'];
+
     card.innerHTML =
-      '<svg class="card-knot tl" viewBox="0 0 30 30" aria-hidden="true"><use href="#corner-knot"/></svg>' +
-      '<svg class="card-knot tr" viewBox="0 0 30 30" aria-hidden="true"><use href="#corner-knot"/></svg>' +
-      '<svg class="card-knot bl" viewBox="0 0 30 30" aria-hidden="true"><use href="#corner-knot"/></svg>' +
-      '<svg class="card-knot br" viewBox="0 0 30 30" aria-hidden="true"><use href="#corner-knot"/></svg>' +
       '<div class="card-inner">' +
-        (badge ? '<div class="card-chip-wrap"><span class="card-chip">' + badge + '</span></div>' : '<div style="height:24px;"></div>') +
-        '<div class="card-icon-frame">' +
-          '<div class="card-icon-glow"></div>' +
-          '<div class="card-icon">' + icon + '</div>' +
+        '<div style="width: 100%; display: flex; justify-content: center; min-height: 22px;">' +
+          (badge ? '<span class="card-chip">' + badge + '</span>' : '') +
         '</div>' +
+        '<div class="card-icon-frame">' + iconSvg + '</div>' +
         '<div class="card-title-wrap">' +
           '<div class="card-title">' + title + '</div>' +
           (sub ? '<div class="card-sub">' + sub + '</div>' : '') +
         '</div>' +
         '<div class="card-divider"></div>' +
-        (desc ? '<div class="card-desc">' + desc + '</div>' : '') +
-        '<div class="card-action-hint">열기 ↗</div>' +
+        (label ? '<div class="card-spec-row"><span class="card-spec-label">' + label + '</span><span class="card-spec-value">' + value + '</span></div>' : '') +
+        '<div class="card-action-btn">' +
+          '<span>열기</span>' +
+          '<svg viewBox="0 0 24 24" style="width:13px; height:13px;" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17l9.2-9.2M17 17V8H8"/></svg>' +
+        '</div>' +
       '</div>';
 
     card.dataset.built = '1';
@@ -320,7 +322,7 @@
     updateCardFan();
   }
 
-  // 클릭 이벤트 처리 (선택 및 페이지 이동)
+  // 클릭 이벤트 (선택 및 페이지 이동)
   document.addEventListener('click', function (e) {
     var card = e.target.closest('.card');
     var now = Date.now();
@@ -353,7 +355,7 @@
     lastSelectTime = now;
   });
 
-  // 마우스 이동 시 3D 원근 틸트 인터랙션
+  // 3D 마우스 틸트 인터랙션
   document.addEventListener('mouseover', function (e) {
     var card = e.target.closest('.card');
     if (!card || card.dataset.tiltInit) return;
@@ -388,7 +390,6 @@
     init();
   }
 
-  // Quartz SPA 페이지 전환 복원
   document.addEventListener('nav', function () {
     if (document.querySelector('.deck .card')) {
       document.querySelectorAll('.deck .card').forEach(function (c) {
